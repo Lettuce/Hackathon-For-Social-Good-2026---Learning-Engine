@@ -10,10 +10,10 @@ h1
     color: #FFC72C;
     font-family: Tahoma;
     font-size: 300%;
+    margin-bottom: 1.5em;
 }
 
-/* I want to make the text with h2 underlined
-    */
+
 h2
 {
     display: flex;
@@ -24,10 +24,14 @@ h2
     text-decoration: underline;
 }
 
+/* I want the cursor to change to a clicker when a select option is hovered over
+*/
 h3
 {
     display: flex;
     justify-content: left;
     color: #FFC72C;
     font-family: Tahoma;
+    font-size: 130%;
+    cursor: pointer;
 }
