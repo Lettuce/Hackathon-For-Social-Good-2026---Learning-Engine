@@ -57,9 +57,12 @@
   {
     "id": "whale-bio-q1",
     "question": "Why aren't whales considered fish?",
-    "description": "Tests basic understanding of .",
-    "choices": [""],
-    "difficulty": "easy",
-    "resourceId": "res01"
+    "description": "Tests deep understanding of how scientific classification influences the way we think.",
+    "choices": ["Because whales have to breathe oxygen",
+                "Because whales are mammals and scientific classification influenced everyday language",
+                "Because whales are bigger than most fish",
+                "Because whales have flippers"],
+    "difficulty": "hard",
+    "resourceId": "res05"
   }
 ]

@@ -37,20 +37,11 @@
   },
   {
     "id": "res05",
-    "title": "Bio-",
+    "title": "Are Whales Fish?",
     "type": "article",
     "url": "https://thereader.mitpress.mit.edu/are-whales-fish/",
     "description": "Distinctions between whales and fish are more influenced by cultural and linguistic changes than by scientific discoveries.",
     "tags": "biology",
     "difficulty": "hard"
-  },
-  {
-    "id": "res05",
-    "title": "Bio-",
-    "type": "video",
-    "url": "",
-    "description": "",
-    "tags": "biology",
-    "difficulty": ""
   }
 ]

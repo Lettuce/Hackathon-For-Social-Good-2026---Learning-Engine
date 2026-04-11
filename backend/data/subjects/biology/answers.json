@@ -23,5 +23,10 @@
     "answer": 1,
     "resourceId": "res04",
     "questionId": "human-bio-q3"
+  },
+  {
+    "answer": 1,
+    "resourceId": "res05",
+    "questionId": "whale-bio-q1"
   }
 ]
