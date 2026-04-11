@@ -1,2 +1,3 @@
+backend/userdata/*
 node_modules
 package-lock.json

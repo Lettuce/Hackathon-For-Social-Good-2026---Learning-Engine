@@ -1,61 +1,86 @@
-import http from 'node:http';
 import fs   from 'node:fs';
 import mime from 'mime/lite';
-// import express from 'express';
+import express from 'express';
+
+let app = express();
+
+app.use(express.json());
+
+const loadJSON = (path) => {
+    console.log(path);
+    return JSON.parse(fs.readFileSync(path, 'utf8'));
+};
+
+const getUserFileName = (username) => {
+    return 'backend/userdata/' + username + '.json';
+}
+const userExists = (username) => {
+    return fs.existsSync(getUserFileName(username));
+};
+
+// class Auth {
+//     constructor(username, password) {
+//         this.username = username;
+//         this.password = password;
+//     }
+//     authenticate(password) {
+//         return (this.password === password);
+//     }
+// }
+
+// class SubjectProgress {
+//     constructor(subject, questions) {
+//         this.subject = subject;
+//         this.questions = questions;
+//     }
+// };
 
 class User {
-    // string, string, array
-    constructor(username, password, badges) {
-        this.username = username;
-        this.password = password;
-        this.badges = badges;
+    constructor(auth, progress) {
+        this.auth = auth;
+        this.progress = progress;
     }
     save() {
-        const user = User(username, password, badges);
-        const data = JSON.stringify(user, null, 4);
-        fs.writeFileSync(username + '.json', data, 'utf8');
+        const data = JSON.stringify(this, null, 4);
+        fs.writeFileSync(getUserFileName(this.auth.username), data, 'utf8');
     }
-    load() {
-        // this = JSON.parse(fs.readFileSync(username + '.json', data, 'utf8'));
+    authenticate(password) {
+        return this.auth.password === password;
+    }
+};
+
+const loadUser = (username) => {
+    try {
+        if(!userExists(username)) {
+            return null;
+        }
+        const source = loadJSON(getUserFileName(username));
+        return new User(source.auth, source.progress);
+    } catch(err) {
+        return null;
     }
 }
 
-const userExists = (username) => {
-    return fs.existsSync("backend/userdata/" + username);
-};
-
-const createUser = (username, password) => {
-    if(userExists(username)) {
-        return null;
-    }
-    
-    const user = User(username, password, badges);
-    user.save();
-    return user;
-};
-
-const api = (request, response) => {
-    // if(request.method === "PUT" && request.path === '/api/createuser') {
-    //     request.js
-    // }
+const respondWithJSON = (response, statusCode, message) => {
+    response.statusCode = statusCode;
+    response.setHeader('Content-Type', 'application/json');
+    response.end(JSON.stringify(message));
 };
 
 const serveFile = (response, path) => {
 
     console.log(`file served: [${path}]`);
 
-    let mimeType = null;
-    let data = null;
+    let mimeType = undefined;
+    let data = undefined;
     try {
         mimeType = mime.getType(path);
         data = fs.readFileSync(path, 'utf8');
-    } catch (err) {
-        console.error(err);
-    }
-    if(data === null) {
+    } catch (err) {}
+    if(data === undefined) {
         response.statusCode = 404;
         response.setHeader('Content-Type', 'text/plain');
-        response.end("404, file not found!");
+        response.end('404, file not found!');
         return;
     }
 
@@ -64,24 +89,53 @@ const serveFile = (response, path) => {
     response.end(data);
 };
 
-const server = http.createServer((request, response) => {
-    
-    let path = request.url ?? '/';
-    path = (path==='/')?'/index.html':path;
-    let method = request.method ?? "GET";
-    
-    if(method === "PUT" || path.startsWith('/api/')) {
-        return api(request, response);
+const createUser = (auth) => {
+    if(userExists(auth.username)) {
+        return false;
     }
+    
+    const user = new User(auth, []);
+    user.save();
+    return true;
+};
 
-    if(path.startsWith('/data/')) {
-        return serveFile(response, 'backend' + path);
-    }
+const authenticateUser = (auth) => {
+    return loadUser(auth.username)?.authenticate(auth.password);
+};
 
-    return serveFile(response, 'frontend' + path);
+app.use('/data/:path', (request, response) => {
+    serveFile(response, 'backend/data/' + request.params.path);
+});
+
+app.get('/', (request, response) => {
+    serveFile(response, 'frontend/index.html');
+});
+
+app.post('/api/createuser', (request, response) => {
+    const body = request.body;
+    const success = createUser(body.auth);
+    respondWithJSON(response, success?201:409, {success: success});
+});
+
+app.post('/api/submitanswers', (request, response) => {
+    const body = request.body;
+    const answers = body.answers;
+    const subject = body.subject;
+    const subjectAnswers = loadJSON('backend/data/subjects/' + subject + '/answers.json');
+    let answersMap = new Map();
+    subjectAnswers.forEach((item, index, array) => {
+        answersMap.set(item.questionId, item.answer);
+    });
+    const result = answers.map(item => answersMap.get(item.questionId)==item.answer);
+    let user = authenticateUser(body.auth);
+    respondWithJSON(response, user?200:400, result);
+});
+
+app.use('/:path', (request, response) => {
+    serveFile(response, 'frontend/' + request.params.path);
 });
 
 const PORT = 5500;
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
-});
+app.listen(PORT);
+
+console.log(`Server running at http://localhost:${PORT}/`);

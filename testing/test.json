@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "username": "testuser",
+        "password": "testpassword"
+    },
+    "subject": "astronomy",
+    "answers": [
+        {
+            "questionId": "planet-q4",
+            "answer": 2
+        },
+        {
+            "questionId": "atomic-q3",
+            "answer": 3
+        }
+    ]
+}

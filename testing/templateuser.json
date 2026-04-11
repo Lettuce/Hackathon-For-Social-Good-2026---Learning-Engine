@@ -1,0 +1,12 @@
+{
+    "auth": {
+        "username": "testuser",
+        "password": "testpassword"
+    },
+    "progress": [
+        {
+            "subject": "astronomy",
+            "questions": ["atomic-q1"]
+        }
+    ]
+}
