@@ -20,8 +20,8 @@
     "questionId": "human-bio-q2"
   },
   {
-    "answer": 0,
-    "resourceId": "res03",
-    "questionId": "human-bio-q2"
+    "answer": 1,
+    "resourceId": "res04",
+    "questionId": "human-bio-q3"
   }
 ]

@@ -3,9 +3,7 @@
     "id": "res01",
     "title": "Atomically confined excitons in 2D perovskites for bright and sub-nanosecond scintillation",
     "type": "article",
-    "source": "ads",
     "url": "https://www.nature.com/articles/s41467-025-67525-7",
-    "urlForSource": "https://ui.adsabs.harvard.edu/",
     "description": "A new method uses atomic-level exciton confinement in 2D perovskites to create ultrafast, highly efficient scintillators for advanced radiation imaging.",
     "tags": "astronomy",
     "difficulty": "hard"
@@ -14,9 +12,7 @@
     "id": "res02",
     "title": "Planet Sizes and Locations in Our Solar System",
     "type": "article",
-    "source": "",
     "url": "https://science.nasa.gov/solar-system/planets/planet-sizes-and-locations-in-our-solar-system/",
-    "urlForSource": "",
     "description": "This is a simple guide to the sizes of planets based on the equatorial diameter – or width – at the equator of each planet.",
     "tags": "astronomy",
     "difficulty": "easy"
@@ -25,9 +21,7 @@
     "id": "res03",
     "title": "Earth",
     "type": "article",
-    "source": "Planet Sizes and Locations in Our Solar System",
     "url": "https://science.nasa.gov/earth/facts/",
-    "urlForSource": "https://science.nasa.gov/solar-system/planets/planet-sizes-and-locations-in-our-solar-system/",
     "description": "Earth – our home planet – is the third planet from the Sun, and the fifth largest planet. It's the only place we know of inhabited by living things.",
     "tags": "astronomy",
     "difficulty": "medium"
