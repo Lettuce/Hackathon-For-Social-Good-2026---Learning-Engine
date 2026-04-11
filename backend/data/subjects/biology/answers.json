@@ -1,56 +1,56 @@
 [
   {
     "id": "atomic-a1",
-    "answer": 1,
+    "answer": "choiceB",
     "resourceId": "res01",
     "questionId": "atomic-q1"
   },
   {
     "id": "atomic-a2",
-    "answer": 2,
+    "answer": "choiceC",
     "resourceId": "res01",
     "questionId": "atomic-q2"
   },
   {
     "id": "atomic-a3",
-    "answer": 1,
+    "answer": "choiceB",
     "resourceId": "res01",
     "questionId": "atomic-q3"
   },
   {
     "id": "atomic-a4",
-    "answer": 1,
+    "answer": "choiceB",
     "resourceId": "res01",
     "questionId": "atomic-q4"
   },
   {
     "id": "planet-a1",
-    "answer": 0,
+    "answer": "choiceA",
     "resourceId": "res02",
     "questionId": "planet-q1"
   },
   {
     "id": "planet-a2",
-    "answer": 3,
+    "answer": "choiceD",
     "resourceId": "res02",
     "questionId": "planet-q2"
   },
   {
     "id": "planet-a3",
-    "answer": 2,
+    "answer": "choiceC",
     "resourceId": "res02",
     "questionId": "planet-q3"
   },
   {
     "id": "planet-a4",
-    "answer": 2,
+    "answer": "choiceC",
     "resourceId": "res03",
     "questionId": "planet-q4"
   },
   {
     "id": "planet-a5",
-    "answer": 1,
+    "answer": "choiceB",
     "resourceId": "res03",
     "questionId": "planet-q5"
-  }
+  },
 ]

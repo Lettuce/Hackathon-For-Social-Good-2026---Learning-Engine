@@ -1,0 +1,24 @@
+[
+  {
+    "id": "res01",
+    "title": "Earth",
+    "type": "article",
+    "source": "",
+    "url": "",
+    "urlForSource": "",
+    "description": "",
+    "tags": "biology",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res02",
+    "title": "",
+    "type": "video",
+    "source": "",
+    "url": "",
+    "urlForSource": "",
+    "description": "",
+    "tags": "biology",
+    "difficulty": ""
+  }
+]
