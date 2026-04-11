@@ -12,10 +12,33 @@
   },
   {
     "id": "res02",
+    "title": "Planet Sizes and Locations in Our Solar System",
+    "type": "article",
+    "source": "",
+    "url": "https://science.nasa.gov/solar-system/planets/planet-sizes-and-locations-in-our-solar-system/",
+    "urlForSource": "",
+    "description": "This is a simple guide to the sizes of planets based on the equatorial diameter – or width – at the equator of each planet.",
+    "tags": "astronomy",
+    "difficulty": "easy"
+  },
+  {
+    "id": "res02",
     "title": "",
     "type": "video",
     "source": "",
     "url": "",
+    "urlForSource": ,
+    "description": "",
+    "tags": "astronomy",
+    "difficulty": ""
+  },
+  {
+    "id": "res02",
+    "title": "",
+    "type": "video",
+    "source": "",
+    "url": "",
+    "urlForSource": ,
     "description": "",
     "tags": "astronomy",
     "difficulty": ""

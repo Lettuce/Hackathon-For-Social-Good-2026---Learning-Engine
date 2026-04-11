@@ -44,38 +44,39 @@
     "resourceId": "res01"
   },
   {
-    "id": "atomic-q2",
-    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
-    "description": "Focuses on understanding the core innovation introduced in the paper.",
-    "choiceA": "",
-    "choiceB": "",
-    "choiceC": "",
-    "choiceD": "",
-    "difficulty": "medium",
-    "resourceId": "res01"
+    "id": "planet-q1",
+    "question": "What is the biggest planet in the solar system?",
+    "description": "Tests basic understanding of planet sizes.",
+    "choiceA": "Jupiter",
+    "choiceB": "Uranus",
+    "choiceC": "Saturn",
+    "choiceD": "Earth",
+    "difficulty": "easy",
+    "resourceId": "res02"
   },
   {
-    "id": "atomic-q2",
-    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
-    "description": "Focuses on understanding the core innovation introduced in the paper.",
-    "choiceA": "",
-    "choiceB": "",
-    "choiceC": "",
-    "choiceD": "",
-    "difficulty": "medium",
-    "resourceId": "res01"
+    "id": "planet-q2",
+    "question": "Which planet is called \"the red planet\"?",
+    "description": "Tests basic understanding of common planet nicknames, in this case one specific nickname.",
+    "choiceA": "Venus",
+    "choiceB": "Pluto",
+    "choiceC": "Jupiter",
+    "choiceD": "Mars",
+    "difficulty": "easy",
+    "resourceId": "res02"
   },
   {
-    "id": "atomic-q2",
-    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
-    "description": "Focuses on understanding the core innovation introduced in the paper.",
-    "choiceA": "",
-    "choiceB": "",
-    "choiceC": "",
-    "choiceD": "",
-    "difficulty": "medium",
-    "resourceId": "res01"
-  },{
+    "id": "planet-q3",
+    "question": "What is the closest planet to the sun?",
+    "description": "Tests basic understanding of planet locations relative to the sun.",
+    "choiceA": "Earth",
+    "choiceB": "Mercury",
+    "choiceC": "Mars",
+    "choiceD": "Saturn",
+    "difficulty": "easy",
+    "resourceId": "res02"
+  },
+  {
     "id": "atomic-q2",
     "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
     "description": "Focuses on understanding the core innovation introduced in the paper.",
