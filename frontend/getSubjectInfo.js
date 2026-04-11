@@ -1,16 +1,23 @@
-let subject = "";
-
 document.addEventListener("DOMContentLoaded", async () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const subjectName = urlParams.get("name");
+  const subjectName = urlParams.get("name") || "";
 
-  if (subjectName) {
-    subject = subjectName;
-    const questions = await getQuestions(subject);
-    renderQuestions(questions);
-  }
+  let subjectTitle = subjectName
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  setupUI(subjectTitle);
 });
+
+function setupUI(subjectTitle) {
+  const legendElement = document.getElementById("formlegend");
+  if (legendElement) legendElement.textContent = subjectTitle;
+
+  const h1Element = document.getElementById("h1");
+  if (h1Element) h1Element.textContent = subjectTitle;
+}
 
 function getQuestions(subjectName) {
   return fetch(`../backend/data/${subjectName}/questions.json`)
@@ -21,7 +28,6 @@ function getQuestions(subjectName) {
       return response.json();
     })
     .then((data) => {
-      // Assuming the JSON is an array where each object has a 'questions' key
       return data.map((item) => item.questions);
     })
     .catch((error) => {
