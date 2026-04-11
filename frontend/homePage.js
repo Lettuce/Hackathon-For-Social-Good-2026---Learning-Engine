@@ -1,22 +1,43 @@
-async function fetchSubjects() {
-  try {
-    const response = await fetch("../backend/data/subjects.json");
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Could not fetch subjects:", error);
-    return null;
-  }
+function getSubjects() {
+  return fetch("../backend/data/subjects.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Extract the "subject" property from each object in the array
+      return data.map((item) => item.subject);
+    })
+    .catch((error) => {
+      console.error("Could not fetch subjects:", error);
+      return null;
+    });
 }
 
-(async () => {
-  const subjectsData = await fetchSubjects();
+// Execute the function and handle the resulting promise
+getSubjects().then((subjectsData) => {
   if (subjectsData) {
     console.log("Fetched Subjects Data:", subjectsData);
+    const subjectsElement = document.getElementById("subjects");
+
+    if (!subjectsElement) {
+      console.error("Target element #subjects not found in DOM");
+      return;
+    }
+
+    subjectsData.forEach((subject) => {
+      const pTag = document.createElement("p");
+      const aTag = document.createElement("a");
+
+      // Configure the link
+      aTag.textContent = subject;
+      aTag.href = `${subject}.html`;
+
+      // Nest and append
+      pTag.appendChild(aTag);
+      subjectsElement.appendChild(pTag);
+    });
   }
-})();
+});
