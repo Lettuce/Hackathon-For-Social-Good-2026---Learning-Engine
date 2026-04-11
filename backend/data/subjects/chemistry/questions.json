@@ -1,0 +1,13 @@
+[
+  {
+    "id": "gen-bio-q1",
+    "question": "What does the prefix \"bio\" mean?",
+    "description": "Tests basic understanding of the topic of Biology as a whole.",
+    "choices": ["Life", 
+                "Humans", 
+                "Computers", 
+                "Animals"],
+    "difficulty": "easy",
+    "resourceId": "res01"
+  },
+]

@@ -1,18 +1,3 @@
-[
-  {
-    "id": "astronomy-record",
-    "title": "Astronomy Record",
-    "subject": "Astronomy",
-    "description": "A database of Astronomy related articles",
-    "tags": "astronomy",
-    "difficulty": "beginner"
-  },
-  {
-    "id": "zoo-record",
-    "title": "Zoological Record",
-    "subject": "Biology",
-    "description": "Zoological Record, currently published by Clarivate Analytics (US) LLC, and by BIOSIS and the Zoological Society of London until 2012, is the world's most comprehensive index to zoological literature. Records cover every aspect of zoology, including biochemistry, behavior, ecology evolution, genetics, and so forth. Over 5,000 international serials plus approximately 1,500 non-serial publications are currently monitored, including professional journals, magazines, newsletters, monographs, books, reviews, and conference proceedings.",
-    "tags": "biology",
-    "difficulty": "beginner"
-  }
-]
+{
+    "subject": ["astronomy", "biology", "chemistry", "computer science", "geology"]
+}
