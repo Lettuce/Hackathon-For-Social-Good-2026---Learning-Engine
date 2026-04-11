@@ -13,9 +13,8 @@ h1
     margin-bottom: 1.5em;
 }
 
-
 h2
-{
+{   
     display: flex;
     justify-content: left;
     color: #FFC72C;
@@ -24,9 +23,7 @@ h2
     text-decoration: underline;
 }
 
-/* I want the cursor to change to a clicker when a select option is hovered over. however, I don't want there to be invisible bars that span the whole screen that cuase the cursor to show a pointer 
-*/
-h3
+.subjects
 {
     display: flex;
     justify-content: left;
