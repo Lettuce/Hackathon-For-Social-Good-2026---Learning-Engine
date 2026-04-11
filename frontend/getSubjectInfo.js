@@ -1,24 +1,19 @@
-<<<<<<< HEAD
-pageTitle = document.title;
+let subject = "";
 
-function getQuestions(pageTitle) {
-  return fetch(`../backend/data/${pageTitle}/questions.json`)
-=======
-subject = "";
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const subjectName = urlParams.get("name");
 
   if (subjectName) {
     subject = subjectName;
+    const questions = await getQuestions(subject);
+    renderQuestions(questions);
   }
 });
 
-function getQuestions(subject) {
-  return fetch(`../backend/data/${subject}/questions.json`)
->>>>>>> 12c64a1 (fect: subject is name pased by getSubjectInfo.js)
+function getQuestions(subjectName) {
+  return fetch(`../backend/data/${subjectName}/questions.json`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,6 +21,7 @@ function getQuestions(subject) {
       return response.json();
     })
     .then((data) => {
+      // Assuming the JSON is an array where each object has a 'questions' key
       return data.map((item) => item.questions);
     })
     .catch((error) => {
@@ -34,17 +30,13 @@ function getQuestions(subject) {
     });
 }
 
-<<<<<<< HEAD
-getQuestions(pageTitle).then((questions) => {
-=======
-getQuestions(subject).then((questions) => {
->>>>>>> 12c64a1 (fect: subject is name pased by getSubjectInfo.js)
+function renderQuestions(questions) {
   if (questions) {
     console.log("Fetched Subjects Data:", questions);
     const questionsElement = document.getElementById("questions");
 
     if (!questionsElement) {
-      console.error("Target element #subjects not found in DOM");
+      console.error("Target element #questions not found in DOM");
       return;
     }
 
@@ -54,4 +46,4 @@ getQuestions(subject).then((questions) => {
       questionsElement.appendChild(pTag);
     });
   }
-});
+}
