@@ -1,12 +1,64 @@
 [
   {
-    "id": "-q1",
+    "id": "gen-bio-q1",
+    "question": "What does the prefix \"bio\" mean?",
+    "description": "Tests basic understanding of the topic of Biology as a whole.",
+    "choices": ["Life", 
+                "Humans", 
+                "Computers", 
+                "Animals"],
+    "difficulty": "easy",
+    "resourceId": "res01"
+  },
+  {
+    "id": "gen-bio-q2",
+    "question": "How many taxonomic ranks are there in biology?",
+    "description": "Tests basic understanding of the way in which organisms are classified in biology.",
+    "choices": ["2", 
+                "5", 
+                "6", 
+                "7"],
+    "difficulty": "medium",
+    "resourceId": "res02"
+  },
+  {
+    "id": "human-bio-q1",
+    "question": "What are humans classified as?",
+    "description": "Tests basic understanding of how humans relate to animals.",
+    "choices": ["Mammals", 
+                "Reptile", 
+                "Amphibian", 
+                "Fish"],
+    "difficulty": "easy",
+    "resourceId": "res03"
+  },
+  {
+    "id": "human-bio-q2",
+    "question": "Are humans vertebrates or invertebrates?",
+    "description": "Tests a more moderate knowledge base of how humans relate to animals.",
+    "choices": ["Vertabrates", 
+                "Invertebrates", 
+                "Both", 
+                "Neither"],
+    "difficulty": "medium",
+    "resourceId": "res03"
+  },
+  {
+    "id": "human-bio-q3",
+    "question": "Are humans vertebrates or invertebrates?",
+    "description": "Tests a more moderate knowledge base of how humans relate to animals.",
+    "choices": ["Vertabrates", 
+                "Invertebrates", 
+                "Both", 
+                "Neither"],
+    "difficulty": "medium",
+    "resourceId": "res04"
+  },
+  {
+    "id": "whale-bio-q1",
     "question": "?",
     "description": "Tests basic understanding of .",
-    "choiceA": "",
-    "choiceB": "",
-    "choiceC": "",
-    "choiceD": "",
+    "choices": [""],
     "difficulty": "easy",
     "resourceId": "res01"
   }

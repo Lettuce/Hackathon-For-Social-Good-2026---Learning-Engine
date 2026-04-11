@@ -1,18 +1,51 @@
 [
   {
     "id": "res01",
-    "title": "Earth",
+    "title": "Bio-",
     "type": "article",
+    "source": "",
+    "url": "https://www.etymonline.com/word/bio-",
+    "urlForSource": "",
+    "description": "Origin and history of bio-",
+    "tags": "biology",
+    "difficulty": "easy"
+  },
+  {
+    "id": "res02",
+    "title": "Levels of Taxonomy Used in Biology",
+    "type": "article",
+    "source": "",
+    "url": "https://www.thoughtco.com/levels-of-taxonomy-1224606",
+    "urlForSource": "",
+    "description": "Taxonomy is the practice of categorizing and naming of species. The official \"scientific name\" of an organism consists of its Genus and its Species Identifier in a naming system called binomial nomenclature.",
+    "tags": "biology",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res03",
+    "title": "6 Basic Animal Classes",
+    "type": "article",
+    "source": "",
+    "url": "https://www.thoughtco.com/the-six-basic-animal-groups-4096604",
+    "urlForSource": "",
+    "description": "Describes the six main animal groups from simplest to most complex.",
+    "tags": "biology",
+    "difficulty": "easy"
+  },
+  {
+    "id": "res04",
+    "title": "Bio-",
+    "type": "video",
     "source": "",
     "url": "",
     "urlForSource": "",
     "description": "",
     "tags": "biology",
-    "difficulty": "medium"
+    "difficulty": ""
   },
   {
-    "id": "res02",
-    "title": "",
+    "id": "res05",
+    "title": "Bio-",
     "type": "video",
     "source": "",
     "url": "",
