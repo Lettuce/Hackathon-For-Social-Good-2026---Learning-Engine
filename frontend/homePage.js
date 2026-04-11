@@ -7,8 +7,7 @@ function getSubjects() {
       return response.json();
     })
     .then((data) => {
-      // Extract the "subject" property from each object in the array
-      return data.map((item) => item.subject);
+      return data.subject.map((item) => item);
     })
     .catch((error) => {
       console.error("Could not fetch subjects:", error);
