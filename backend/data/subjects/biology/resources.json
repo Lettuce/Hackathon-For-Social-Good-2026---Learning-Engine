@@ -5,7 +5,6 @@
     "type": "article",
     "url": "https://www.etymonline.com/word/bio-",
     "description": "Origin and history of bio-",
-    "tags": "biology",
     "difficulty": "easy"
   },
   {
@@ -14,7 +13,6 @@
     "type": "article",
     "url": "https://www.thoughtco.com/levels-of-taxonomy-1224606",
     "description": "Taxonomy is the practice of categorizing and naming of species. The official \"scientific name\" of an organism consists of its Genus and its Species Identifier in a naming system called binomial nomenclature.",
-    "tags": "biology",
     "difficulty": "medium"
   },
   {
@@ -23,7 +21,6 @@
     "type": "article",
     "url": "https://www.thoughtco.com/the-six-basic-animal-groups-4096604",
     "description": "Describes the six main animal groups from simplest to most complex.",
-    "tags": "biology",
     "difficulty": "easy"
   },
   {
@@ -32,7 +29,6 @@
     "type": "article",
     "url": "https://my.clevelandclinic.org/health/body/21486-pulmonary-arteries",
     "description": "Describes what the pulmonary arteries in a human body are and what they do",
-    "tags": "biology",
     "difficulty": "hard"
   },
   {
@@ -41,7 +37,6 @@
     "type": "article",
     "url": "https://thereader.mitpress.mit.edu/are-whales-fish/",
     "description": "Distinctions between whales and fish are more influenced by cultural and linguistic changes than by scientific discoveries.",
-    "tags": "biology",
     "difficulty": "hard"
   }
 ]

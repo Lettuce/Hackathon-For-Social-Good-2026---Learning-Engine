@@ -1,11 +1,10 @@
 [  
   {
-    "id": "res05",
+    "id": "res01",
     "title": "Bio-",
-    "type": "video",
-    "url": "",
+    "type": "article",
+    "url": "https://letstalkscience.ca/educational-resources/backgrounders/respiratory-system-in-vertebrate-animals",
     "description": "",
-    "tags": "biology",
     "difficulty": ""
   },
   {
@@ -14,7 +13,6 @@
     "type": "video",
     "url": "",
     "description": "",
-    "tags": "biology",
     "difficulty": ""
   }
 ]

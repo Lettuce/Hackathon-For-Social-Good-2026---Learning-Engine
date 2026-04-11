@@ -5,7 +5,6 @@
     "type": "article",
     "url": "https://www.nature.com/articles/s41467-025-67525-7",
     "description": "A new method uses atomic-level exciton confinement in 2D perovskites to create ultrafast, highly efficient scintillators for advanced radiation imaging.",
-    "tags": "astronomy",
     "difficulty": "hard"
   },
   {
@@ -14,7 +13,6 @@
     "type": "article",
     "url": "https://science.nasa.gov/solar-system/planets/planet-sizes-and-locations-in-our-solar-system/",
     "description": "This is a simple guide to the sizes of planets based on the equatorial diameter – or width – at the equator of each planet.",
-    "tags": "astronomy",
     "difficulty": "easy"
   },
   {
@@ -23,7 +21,6 @@
     "type": "article",
     "url": "https://science.nasa.gov/earth/facts/",
     "description": "Earth – our home planet – is the third planet from the Sun, and the fifth largest planet. It's the only place we know of inhabited by living things.",
-    "tags": "astronomy",
     "difficulty": "medium"
   }
 ]
