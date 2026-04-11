@@ -1,5 +1,7 @@
-function getQuestions() {
-  return fetch("../backend/data/subjects.json")
+pageTitle = document.title;
+
+function getQuestions(pageTitle) {
+  return fetch(`../backend/data/${pageTitle}/questions.json`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -7,8 +9,7 @@ function getQuestions() {
       return response.json();
     })
     .then((data) => {
-      // Extract the "subject" property from each object in the array
-      return data.map((item) => item.subject);
+      return data.map((item) => item.questions);
     })
     .catch((error) => {
       console.error("Could not fetch subjects:", error);
@@ -16,28 +17,20 @@ function getQuestions() {
     });
 }
 
-// Execute the function and handle the resulting promise
-getSubjects().then((subjectsData) => {
-  if (subjectsData) {
-    console.log("Fetched Subjects Data:", subjectsData);
-    const subjectsElement = document.getElementById("subjects");
+getQuestions(pageTitle).then((questions) => {
+  if (questions) {
+    console.log("Fetched Subjects Data:", questions);
+    const questionsElement = document.getElementById("questions");
 
-    if (!subjectsElement) {
+    if (!questionsElement) {
       console.error("Target element #subjects not found in DOM");
       return;
     }
 
-    subjectsData.forEach((subject) => {
+    questions.forEach((question) => {
       const pTag = document.createElement("p");
-      const aTag = document.createElement("a");
-
-      // Configure the link
-      aTag.textContent = subject;
-      aTag.href = `${subject}.html`;
-
-      // Nest and append
-      pTag.appendChild(aTag);
-      subjectsElement.appendChild(pTag);
+      pTag.textContent = question;
+      questionsElement.appendChild(pTag);
     });
   }
 });
