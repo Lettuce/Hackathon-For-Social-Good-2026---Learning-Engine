@@ -11,3 +11,23 @@ h1
     font-family: Tahoma;
     font-size: 300%;
 }
+
+/* I want to make the text with h2 underlined
+    */
+h2
+{
+    display: flex;
+    justify-content: left;
+    color: #FFC72C;
+    font-family: Tahoma;
+    font-size: 200%;
+    text-decoration: underline;
+}
+
+h3
+{
+    display: flex;
+    justify-content: left;
+    color: #FFC72C;
+    font-family: Tahoma;
+}
