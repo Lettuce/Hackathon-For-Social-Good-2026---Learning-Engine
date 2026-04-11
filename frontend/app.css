@@ -1,13 +1,13 @@
 body
 {
-    background-color: #29762E;
+    background-color: #004C46;
 }
 
 h1
 {
     display: flex;
     justify-content: center;
-    color: #FFC618;
+    color: #FFC72C;
     font-family: Tahoma;
     font-size: 300%;
 }
