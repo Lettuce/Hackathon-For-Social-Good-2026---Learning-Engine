@@ -1,0 +1,100 @@
+[
+  {
+    "id": "atomic-q1",
+    "question": "What is the main goal of improving scintillators in this research?",
+    "description": "Tests basic understanding of the article’s motivation and application.",
+    "choiceA": "To reduce the cost of semiconductor manufacturing",
+    "choiceB": "To improve both response speed and efficiency for radiation detection",
+    "choiceC": "To increase the size of perovskite crystals",
+    "choiceD": "To eliminate the need for radiation entirely",
+    "difficulty": "easy",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q2",
+    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
+    "description": "Focuses on understanding the core innovation introduced in the paper.",
+    "choiceA": "Increasing the size of molecular structures",
+    "choiceB": "Using metallic nanoparticles for faster conduction",
+    "choiceC": "Achieving atomic-level exciton confinement in 2D perovskites",
+    "choiceD": "Reducing temperature to near absolute zero",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q3",
+    "question": "Why is in-plane octahedral tilting beneficial for exciton confinement?",
+    "description": "Tests understanding of structure-property relationships.",
+    "choiceA": "It increases the size of the material",
+    "choiceB": "It prevents the formation of self-trapped excitons (STE)",
+    "choiceC": "It reduces the number of atoms in the structure",
+    "choiceD": "It eliminates all lattice distortions",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q4",
+    "question": "How does (1,4-CMA)PbBr₄ achieve both fast response and high light yield?",
+    "description": "Requires integrating multiple concepts from the article.",
+    "choiceA": "By increasing temperature during operation",
+    "choiceB": "By combining strong in-plane distortion with out-of-plane dielectric confinement",
+    "choiceC": "By using rare-earth elements for emission",
+    "choiceD": "By eliminating excitons entirely",
+    "difficulty": "hard",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q2",
+    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
+    "description": "Focuses on understanding the core innovation introduced in the paper.",
+    "choiceA": "",
+    "choiceB": "",
+    "choiceC": "",
+    "choiceD": "",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q2",
+    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
+    "description": "Focuses on understanding the core innovation introduced in the paper.",
+    "choiceA": "",
+    "choiceB": "",
+    "choiceC": "",
+    "choiceD": "",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q2",
+    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
+    "description": "Focuses on understanding the core innovation introduced in the paper.",
+    "choiceA": "",
+    "choiceB": "",
+    "choiceC": "",
+    "choiceD": "",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  },{
+    "id": "atomic-q2",
+    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
+    "description": "Focuses on understanding the core innovation introduced in the paper.",
+    "choiceA": "",
+    "choiceB": "",
+    "choiceC": "",
+    "choiceD": "",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  },
+  {
+    "id": "atomic-q2",
+    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
+    "description": "Focuses on understanding the core innovation introduced in the paper.",
+    "choiceA": "",
+    "choiceB": "",
+    "choiceC": "",
+    "choiceD": "",
+    "difficulty": "medium",
+    "resourceId": "res01"
+  }
+]

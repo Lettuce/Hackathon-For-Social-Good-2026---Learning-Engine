@@ -1,0 +1,23 @@
+[
+  {
+    "id": "res01",
+    "title": "Atomically confined excitons in 2D perovskites for bright and sub-nanosecond scintillation",
+    "type": "article",
+    "source": "ads",
+    "url": "https://www.nature.com/articles/s41467-025-67525-7",
+    "urlForSource": "https://ui.adsabs.harvard.edu/",
+    "description": "A new method uses atomic-level exciton confinement in 2D perovskites to create ultrafast, highly efficient scintillators for advanced radiation imaging.",
+    "tags": "astronomy",
+    "difficulty": "hard"
+  },
+  {
+    "id": "res02",
+    "title": "",
+    "type": "video",
+    "source": "",
+    "url": "",
+    "description": "",
+    "tags": "astronomy",
+    "difficulty": ""
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "atomic-a1",
+    "answer": "choiceB",
+    "resourceId": "res01",
+    "questionId": "atomic-q1"
+  },
+  {
+    "id": "atomic-a2",
+    "answer": "choiceC",
+    "resourceId": "res01",
+    "questionId": "atomic-q2"
+  },
+  {
+    "id": "atomic-a3",
+    "answer": "choiceB",
+    "resourceId": "res01",
+    "questionId": "atomic-q3"
+  },
+  {
+    "id": "atomic-a4",
+    "answer": "choiceB",
+    "resourceId": "res01",
+    "questionId": "atomic-q4"
+  },
+  
+]
