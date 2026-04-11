@@ -1,12 +1,15 @@
-const http = require('http');
-const fs = require('node:fs');
+import http from 'node:http';
+import fs   from 'node:fs';
+import mime from 'mime/lite';
 
-const frontendFileRequestHandler = (response, path) => {
+const serveFile = (response, path) => {
 
-    console.log(`URL: [${path}]`);
+    console.log(`file served: [${path}]`);
 
+    let mimeType = null;
     let data = null;
     try {
+        mimeType = mime.getType(path);
         data = fs.readFileSync(path, 'utf8');
     } catch (err) {
         console.error(err);
@@ -19,7 +22,7 @@ const frontendFileRequestHandler = (response, path) => {
     }
 
     response.statusCode = 200;
-    response.setHeader('Content-Type', 'text/html');
+    response.setHeader('Content-Type', mimeType);
     response.end(data);
 };
 
@@ -30,10 +33,10 @@ const server = http.createServer((request, response) => {
     
 
     if(path.startsWith('/data/')) {
-        return frontendFileRequestHandler(response, 'backend' + path);
+        return serveFile(response, 'backend' + path);
     }
 
-    return frontendFileRequestHandler(response, 'frontend' + path);
+    return serveFile(response, 'frontend' + path);
 });
 
 const PORT = 3000;
