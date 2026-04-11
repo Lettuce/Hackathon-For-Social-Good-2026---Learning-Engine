@@ -2,6 +2,31 @@
   {
     "answer": 0,
     "resourceId": "res01",
-    "questionId": "chem-q1"
+    "questionId": "chem-resp-q1"
+  },
+  {
+    "answer": 1,
+    "resourceId": "res02",
+    "questionId": "chem-resp-q2"
+  },
+  {
+    "answer": 0,
+    "resourceId": "res03",
+    "questionId": "chem-elem-q1"
+  },
+  {
+    "answer": 2,
+    "resourceId": "",
+    "questionId": "chem-elem-q2"
+  },
+  {
+    "answer": 3,
+    "resourceId": "",
+    "questionId": "chem-elem-q3"
+  },
+  {
+    "answer": 2,
+    "resourceId": "",
+    "questionId": "chem-elem-q4"
   }
 ]

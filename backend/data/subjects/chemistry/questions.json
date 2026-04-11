@@ -1,13 +1,66 @@
 [
   {
-    "id": "gen-bio-q1",
-    "question": "What does the prefix \"bio\" mean?",
-    "description": "Tests basic understanding of the topic of Biology as a whole.",
-    "choices": ["Life", 
-                "Humans", 
-                "Computers", 
-                "Animals"],
+    "id": "chem-resp-q1",
+    "question": "What gas do all mammals breathe?",
+    "description": "Tests basic understanding of the gases essential to animals.",
+    "choices": ["Carbon dioxide", 
+                "Nitrogen", 
+                "Oxygen", 
+                "Hydrogen"],
     "difficulty": "easy",
     "resourceId": "res01"
+  },
+  {
+    "id": "chem-resp-q2",
+    "question": "What gas do almost all plants absorb?",
+    "description": "Tests basic understanding of the gases essential to plants.",
+    "choices": ["Nitrogen", 
+                "Carbon dioxide", 
+                "Gasoline", 
+                "Oxygen"],
+    "difficulty": "easy",
+    "resourceId": "res02"
+  },
+  {
+    "id": "chem-elem-q1",
+    "question": "What does the atomic number of an element represent?",
+    "description": "Tests basic understanding of the essential numbers that identify elements.",
+    "choices": ["The total protons found in the nucleus of an atom", 
+                "The total electrons of an atom", 
+                "The total neutrons of an atom"],
+    "difficulty": "medium",
+    "resourceId": "res03"
+  },
+  {
+    "id": "chem-elem-q2",
+    "question": "What is the most abundant element in the universe?",
+    "description": "Tests a more moderate understanding of the elements on our planet.",
+    "choices": ["Carbon", 
+                "Helium", 
+                "Hydrogen"],
+    "difficulty": "medium",
+    "resourceId": ""
+  },
+  {
+    "id": "chem-elem-q3",
+    "question": "Based on electron configuration, what element would be the most reactive with water?",
+    "description": "Tests a deeper understanding of the chemical reactions between elements.",
+    "choices": ["Nitrogen", 
+                "Xenon", 
+                "Gold",
+                "Francium"],
+    "difficulty": "hard",
+    "resourceId": ""
+  },
+  {
+    "id": "chem-elem-q4",
+    "question": "Which isotope has the smallest half-life?",
+    "description": "Tests a deeper understanding of the chemical reactions between elements.",
+    "choices": ["Uranium-235", 
+                "Plutonium-239", 
+                "Iodine-131",
+                "Cesium-137"],
+    "difficulty": "hard",
+    "resourceId": ""
   }
 ]

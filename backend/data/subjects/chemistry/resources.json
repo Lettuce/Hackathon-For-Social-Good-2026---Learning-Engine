@@ -1,14 +1,38 @@
 [  
   {
     "id": "res01",
-    "title": "Bio-",
+    "title": "Respiratory System in Vertebrate Animals",
     "type": "article",
     "url": "https://letstalkscience.ca/educational-resources/backgrounders/respiratory-system-in-vertebrate-animals",
+    "description": "Describes the system in which all animals use to breathe.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res02",
+    "title": "Water Uptake and Transport in Vascular Plants-",
+    "type": "article",
+    "url": "https://www.nature.com/scitable/knowledge/library/water-uptake-and-transport-in-vascular-plants-103016037/",
+    "description": "Describes the pathways and mechanisms driving water uptake and transport through plants, and causes of flow disruption.",
+    "difficulty": "hard"
+  },
+  {
+    "id": "res03",
+    "title": "What Does the Atomic Number Of An Element Represent?",
+    "type": "article",
+    "url": "https://engineeredlabs.com/blogs/news/what-does-the-atomic-number-of-an-element-represent",
+    "description": "Describes the essential number that determines the identity of an element",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res02",
+    "title": "",
+    "type": "",
+    "url": "",
     "description": "",
     "difficulty": ""
   },
   {
-    "id": "res05",
+    "id": "res02",
     "title": "Bio-",
     "type": "video",
     "url": "",
