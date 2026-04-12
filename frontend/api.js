@@ -21,7 +21,7 @@ class Auth {
 
 
 class API {
-    static sendRequest = async (endpoint, data={}, auth=false) => {
+    static sendRequest = async (endpoint, data, auth) => {
         try {
             const response = await fetch(endpoint, {
                 method: 'POST',
@@ -39,7 +39,7 @@ class API {
     // set current user's authentication details
     static login = (username, password) => {
         const auth = new Auth(username, password);
-        if(!auth.verify()) return false;
+        if(!this.verifyAuth(auth)) return false;
         auth.save();
         return true;
     };
@@ -54,18 +54,18 @@ class API {
     static loggedIn = () => !(this.currentAuth()===null);
 
     // returns true if the user's credentials are correct, false otherwise (btw it returns false even on errors, which is how it works)
-    static verifyAuth = () => sendRequest('/api/vaildateauthentication', data={}, auth=true) ?? false;
+    static verifyAuth = (userAuth) => this.sendRequest('/api/vaildateauthentication', {auth:userAuth}, false) ?? false;
 
     // returns an array of answered questionIds
-    static getAnsweredQuestions = (subject) => this.sendRequest('/api/answeredquestions', data={ subject: subject }, auth=true);
+    static getAnsweredQuestions = (subject) => this.sendRequest('/api/answeredquestions', { subject: subject }, true);
 
     // return the answers object, but with the answer indices replaced with if the answer was correct or not
-    static submitAnswers = (subject, answers) => this.sendRequest('/api/submitanswers', data={ subject: subject, answers: answers }, auth=true);
+    static submitAnswers = (subject, answers) => this.sendRequest('/api/submitanswers', { subject: subject, answers: answers }, true);
 
     // returns true if the user's credentials are correct, false otherwise (even on errors)
     static createUser = (username, password) => {
         const userAuth = new Auth(username, password);
-        const result = sendRequest('/api/createuser', data={auth:userAuth}, auth=false)?.success ?? false;
+        const result = this.sendRequest('/api/createuser', {auth:userAuth}, false)?.success ?? false;
         if(!result) return false;
         userAuth.save();
         return true;
