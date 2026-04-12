@@ -40,7 +40,7 @@ class API {
     static login = async (username, password) => {
         const auth = new Auth(username, password);
         const result = await this.verifyAuth(auth);
-        if((result==null) || (result==false)) return false;
+        if((result==null) || (result==false) || (result==undefined)) return false;
         auth.save();
         return true;
     };
@@ -66,8 +66,10 @@ class API {
     // returns true if the user's credentials are correct, false otherwise (even on errors)
     static createUser = async (username, password) => {
         const userAuth = new Auth(username, password);
-        const result = await this.sendRequest('/api/createuser', {auth: userAuth}, false)?.success ?? false;
-        if((result==null) || (result==false)) return false;
+        const result = await this.sendRequest('/api/createuser', {auth: userAuth}, false);
+        if((result==null) || (result==false) || (result==undefined)) return false;
+        const success = result.success;
+        if(!success) return false;
         userAuth.save();
         return true;
     };
