@@ -8,7 +8,7 @@
                 "function definitions", 
                 "if/else statements"],
     "difficulty": "easy",
-    "resourceId": ""
+    "resourceId": "res01"
   },
   {
     "id": "cs-general-q2",
@@ -19,7 +19,7 @@
                 "The worst-case upper bound of a program", 
                 "The cereal number of a program"],
     "difficulty": "hard",
-    "resourceId": ""
+    "resourceId": "res02"
   },
   {
     "id": "c-plus-plus-q1",
@@ -30,7 +30,7 @@
                 "double", 
                 "response"],
     "difficulty": "easy",
-    "resourceId": "res01"
+    "resourceId": "res03"
   },
   {
     "id": "sql-q1",
@@ -41,7 +41,7 @@
                 "aggregate function", 
                 "table"],
     "difficulty": "medium",
-    "resourceId": ""
+    "resourceId": "res04"
   },
   {
     "id": "html-q1",
@@ -52,7 +52,7 @@
                 "Heavy Terminal Mathematical Language", 
                 "Hypertext Markup Language"],
     "difficulty": "medium",
-    "resourceId": ""
+    "resourceId": "res05"
   },
   {
     "id": "php-q1",
@@ -63,6 +63,6 @@
                 "Styles and formats websites easy use and accessibility", 
                 "Processes server input to return a value to the user"],
     "difficulty": "hard",
-    "resourceId": ""
+    "resourceId": "res06"
   }
 ]

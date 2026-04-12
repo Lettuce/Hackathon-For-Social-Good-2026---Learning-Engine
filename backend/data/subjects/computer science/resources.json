@@ -1,18 +1,50 @@
 [  
   {
     "id": "res01",
-    "title": "",
-    "type": "",
-    "url": "",
-    "description": "",
-    "difficulty": ""
+    "title": "Why Conditional Statements Are the Backbone of Logical Programming",
+    "type": "article",
+    "url": "https://imarticus.org/blog/why-conditional-statements-are-the-backbone-of-logical-programming/",
+    "description": "Describes how conditional statements are what computers use to make decisions.",
+    "difficulty": "easy"
   },
   {
     "id": "res02",
-    "title": "Bio-",
+    "title": "Big-O Notation in 100 Seconds",
     "type": "video",
-    "url": "",
-    "description": "",
-    "difficulty": ""
+    "url": "https://www.youtube.com/watch?v=g2o22C3CRfU",
+    "description": "A short visual summary of what Big-O notation is and how it works.",
+    "difficulty": "hard"
+  },
+  {
+    "id": "res03",
+    "title": "11 Common Data Types: A Comprehensive Guide",
+    "type": "article",
+    "url": "https://www.splunk.com/en_us/blog/learn/data-types.html",
+    "description": "Describes how data is categorized by structure, which is essential for effective data analysis, programming, and storage methodologies.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res04",
+    "title": "Relationships in SQL – Complete Guide With Examples",
+    "type": "article",
+    "url": "https://www.devart.com/dbforge/sql/studio/sql-relationships.html",
+    "description": "Describes the details of SQL Server relations, like many-to-many, many-to-one, and one-to-one relations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "res05",
+    "title": "HTML in 5 minutes",
+    "type": "video",
+    "url": "https://youtu.be/salY_Sm6mv4?si=qej1POhGL0_fmlEb",
+    "description": "Describes the essential details of what HTML is and how it works.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res06",
+    "title": "Post back in PHP",
+    "type": "lesson",
+    "url": "https://php-mechanic.blogspot.com/2011/06/lesson-9-post-back-in-php.html",
+    "description": "Demonstrates some quick examples of PHP post back and briefly describes what they do.",
+    "difficulty": "hard"
   }
 ]
