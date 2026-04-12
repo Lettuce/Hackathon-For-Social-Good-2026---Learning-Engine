@@ -1,7 +1,7 @@
 [
   {
     "id": "space-debris-q1",
-    "question": "When big space debris collide at a fast speed, a chain reaction occurs where each collision increases the probability of future collisions with other space debris. What is this chain reaction called?",
+    "question": "What is it called when space objects collide and a chain reaction occurs where more and more collisions happen?",
     "description": "Tests a deeper understanding of the orbits of space objects and the consequences of their orbits crossing paths.",
     "choices": ["Kristen Kressner syndrome",
                 "Clifford DeVoe effect",
