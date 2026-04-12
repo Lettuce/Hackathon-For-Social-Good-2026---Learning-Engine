@@ -27,16 +27,18 @@ getSubjects().then((subjectsData) => {
     }
 
     subjectsData.forEach((subject) => {
-    const pTag = document.createElement("p");
-    const aTag = document.createElement("a");
+    const pElement = document.createElement("p");
+    const aElement = document.createElement("a");
+    const fieldsetElement = document.createElement("fieldset");
 
     // Configure the link with a query parameter
-    aTag.textContent = subject;
-    aTag.href = `subject.html?name=${subject}`;
+    aElement.textContent = subject;
+    aElement.href = `subject.html?name=${subject}`;
 
     // Nest and append
-    pTag.appendChild(aTag);
-    subjectsElement.appendChild(pTag);
+    pElement.appendChild(aElement);
+    fieldsetElement.appendChild(pElement);
+    subjectsElement.appendChild(fieldsetElement);
     });
   }
 });
