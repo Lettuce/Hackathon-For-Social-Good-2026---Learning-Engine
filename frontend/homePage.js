@@ -15,6 +15,10 @@ function getSubjects() {
     });
 }
 
+if (!API.loggedIn()) {
+ window.location.href = "login.html";
+}
+ 
 // Execute the function and handle the resulting promise
 getSubjects().then((subjectsData) => {
   if (subjectsData) {
