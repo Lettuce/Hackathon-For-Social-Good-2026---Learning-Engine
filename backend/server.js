@@ -117,6 +117,11 @@ app.post('/api/createuser', (req, resp) => {
     respondWithJSON(resp, success?201:409, {success: success});
 });
 
+// const debugMiddleware = (req, resp, next) => {
+//     console.log(req.body);
+//     next();
+// };
+
 app.post('/api/submitanswers', authenticateMiddleware, (req, resp) => {
     const body = req.body;
     let user = loadUser(body.auth.username);
