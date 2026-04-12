@@ -174,7 +174,7 @@ function renderChoices(choices) {
 function formSubmission()
 {
     const answers = getAnswers();
-    API.submitAnswers(subjectName, getAnswers {"planet-q4": 2, "atomic-q3": 3});
+    //API.submitAnswers(subjectName, getAnswers {"planet-q4": 2, "atomic-q3": 3});
 }
 
 function getAnswers(formElement) {
