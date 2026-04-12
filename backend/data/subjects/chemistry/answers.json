@@ -1,26 +1,8 @@
-[
-  {
-    "answer": 0,
-    "questionId": "chem-resp-q1"
-  },
-  {
-    "answer": 1,
-    "questionId": "chem-resp-q2"
-  },
-  {
-    "answer": 0,
-    "questionId": "chem-elem-q1"
-  },
-  {
-    "answer": 2,
-    "questionId": "chem-elem-q2"
-  },
-  {
-    "answer": 3,
-    "questionId": "chem-elem-q3"
-  },
-  {
-    "answer": 2,
-    "questionId": "chem-elem-q4"
-  }
-]
+{
+  "chem-resp-q1": 0,
+  "chem-resp-q2": 1,
+  "chem-elem-q1": 0,
+  "chem-elem-q2": 2,
+  "chem-elem-q3": 3,
+  "chem-elem-q4": 2
+}

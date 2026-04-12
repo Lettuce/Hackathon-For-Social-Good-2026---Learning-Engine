@@ -1,38 +1,11 @@
-[
-  {
-    "answer": 1,
-    "questionId": "atomic-q1"
-  },
-  {
-    "answer": 2,
-    "questionId": "atomic-q2"
-  },
-  {
-    "answer": 1,
-    "questionId": "atomic-q3"
-  },
-  {
-    "answer": 1,
-    "questionId": "atomic-q4"
-  },
-  {
-    "answer": 0,
-    "questionId": "planet-q1"
-  },
-  {
-    "answer": 3,
-    "questionId": "planet-q2"
-  },
-  {
-    "answer": 2,
-    "questionId": "planet-q3"
-  },
-  {
-    "answer": 2,
-    "questionId": "planet-q4"
-  },
-  {
-    "answer": 1,
-    "questionId": "planet-q5"
-  }
-]
+{
+  "atomic-q1": 1,
+  "atomic-q2": 2,
+  "atomic-q3": 1,
+  "atomic-q4": 1,
+  "planet-q1": 0,
+  "planet-q2": 3,
+  "planet-q3": 2,
+  "planet-q4": 2,
+  "planet-q5": 1
+}

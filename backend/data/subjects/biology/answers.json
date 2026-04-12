@@ -1,26 +1,8 @@
-[
-  {
-    "answer": 0,
-    "questionId": "gen-bio-q1"
-  },
-  {
-    "answer": 3,
-    "questionId": "gen-bio-q2"
-  },
-  {
-    "answer": 0,
-    "questionId": "human-bio-q1"
-  },
-  {
-    "answer": 0,
-    "questionId": "human-bio-q2"
-  },
-  {
-    "answer": 1,
-    "questionId": "human-bio-q3"
-  },
-  {
-    "answer": 1,
-    "questionId": "whale-bio-q1"
-  }
-]
+{
+  "gen-bio-q1": 0,
+  "gen-bio-q2": 3,
+  "human-bio-q1": 0,
+  "human-bio-q2": 0,
+  "human-bio-q3": 1,
+  "whale-bio-q1": 1
+}

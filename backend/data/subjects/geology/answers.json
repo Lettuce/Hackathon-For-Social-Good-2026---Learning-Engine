@@ -1,30 +1,8 @@
-[
-  {
-    "answer": 1,
-    "questionId": "geog-mineral-q1"
-  },
-  {
-    "answer": 3,
-    "questionId": "geog-mineral-q2"
-  },
-  {
-    "answer": 3,
-    "questionId": "geog-mineral-q3"
-  },
-  {
-    "answer": 1,
-    "questionId": "geog-rock-q1"
-  },
-  {
-    "answer": 0,
-    "questionId": "geog-rock-q2"
-  },
-  {
-    "answer": 1,
-    "questionId": "geog-rock-q3"
-  },
-  {
-    "answer": 2,
-    "questionId": "geog-mineral-q3"
-  }
-]
+{
+  "geog-mineral-q1": 1,
+  "geog-mineral-q2": 3,
+  "geog-mineral-q3": 3,
+  "geog-rock-q1": 1,
+  "geog-rock-q2": 0,
+  "geog-rock-q3": 1
+}
