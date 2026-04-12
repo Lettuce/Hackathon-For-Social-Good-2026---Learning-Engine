@@ -3,10 +3,8 @@
         "username": "testuser",
         "password": "testpassword"
     },
-    "progress": [
-        {
-            "subject": "astronomy",
-            "questions": ["atomic-q1"]
-        }
-    ]
+    "progress": {
+        "astronomy": ["atomic-q1"],
+        "chemistry": ["chem-q1"]
+    }
 }

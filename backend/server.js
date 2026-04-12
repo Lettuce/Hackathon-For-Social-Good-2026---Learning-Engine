@@ -7,8 +7,13 @@ let app = express();
 app.use(express.json());
 
 const loadJSON = (path) => {
-    console.log(path);
     return JSON.parse(fs.readFileSync(path, 'utf8'));
+};
+
+const saveJSON = (path, data) => {
+    console.log(data.progress);
+    console.log(JSON.stringify(data.progress, null, 4));
+    fs.writeFileSync(path, JSON.stringify(data, null, 4), 'utf8');
 };
 
 const getUserFileName = (username) => {
@@ -18,42 +23,26 @@ const userExists = (username) => {
     return fs.existsSync(getUserFileName(username));
 };
 
-// class Auth {
-//     constructor(username, password) {
-//         this.username = username;
-//         this.password = password;
-//     }
-//     authenticate(password) {
-//         return (this.password === password);
-//     }
-// }
-
-// class SubjectProgress {
-//     constructor(subject, questions) {
-//         this.subject = subject;
-//         this.questions = questions;
-//     }
-// };
-
 class User {
     constructor(auth, progress) {
         this.auth = auth;
         this.progress = progress;
     }
     save() {
-        const data = JSON.stringify(this, null, 4);
-        fs.writeFileSync(getUserFileName(this.auth.username), data, 'utf8');
-    }
-    authenticate(password) {
-        return this.auth.password === password;
+        saveJSON(getUserFileName(this.auth.username), this);
     }
 };
 
+const authenticate = (auth) => {
+    try {
+        return loadJSON(getUserFileName(auth.username)).auth.password === auth.password;
+    } catch(err) {
+        return false;
+    }
+}
+
 const loadUser = (username) => {
     try {
-        if(!userExists(username)) {
-            return null;
-        }
         const source = loadJSON(getUserFileName(username));
         return new User(source.auth, source.progress);
     } catch(err) {
@@ -99,16 +88,24 @@ const createUser = (auth) => {
     return true;
 };
 
-const authenticateUser = (auth) => {
-    return loadUser(auth.username)?.authenticate(auth.password);
+const authenticateMiddleware = (request, response, next) => {
+    if(!authenticate(request.body.auth)) {
+        respondWithJSON(response, 403, {success: false});
+        return;
+    }
+    next()
 };
 
-app.use('/data/:path', (request, response) => {
+app.get('/data/:path', (request, response) => {
     serveFile(response, 'backend/data/' + request.params.path);
 });
 
 app.get('/', (request, response) => {
     serveFile(response, 'frontend/index.html');
+});
+
+app.get('/:path', (request, response) => {
+    serveFile(response, 'frontend/' + request.params.path);
 });
 
 app.post('/api/createuser', (request, response) => {
@@ -117,8 +114,9 @@ app.post('/api/createuser', (request, response) => {
     respondWithJSON(response, success?201:409, {success: success});
 });
 
-app.post('/api/submitanswers', (request, response) => {
+app.post('/api/submitanswers', authenticateMiddleware, (request, response) => {
     const body = request.body;
+    let user = loadUser(body.auth.username);
     const answers = body.answers;
     const subject = body.subject;
     const subjectAnswers = loadJSON('backend/data/subjects/' + subject + '/answers.json');
@@ -126,13 +124,20 @@ app.post('/api/submitanswers', (request, response) => {
     subjectAnswers.forEach((item, index, array) => {
         answersMap.set(item.questionId, item.answer);
     });
-    const result = answers.map(item => answersMap.get(item.questionId)==item.answer);
-    let user = authenticateUser(body.auth);
-    respondWithJSON(response, user?200:400, result);
-});
 
-app.use('/:path', (request, response) => {
-    serveFile(response, 'frontend/' + request.params.path);
+    const isCorrect = item => answersMap.get(item.questionId)==item.answer;
+
+    const result = answers.map(isCorrect);
+
+    if(!(user.progress.includes(subject))) {
+        user.progress[subject] = []
+    }
+
+    const toAdd = answers.filter(isCorrect).filter(item => !(user.progress[subject].includes(item.questionId))).map(item => item.questionId);
+    
+    user.progress[subject].push(toAdd);
+    user.save();
+    respondWithJSON(response, 200, result);
 });
 
 const PORT = 5500;
