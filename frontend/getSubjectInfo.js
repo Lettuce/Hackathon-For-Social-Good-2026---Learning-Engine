@@ -150,6 +150,8 @@ function renderChoices(choices) {
     questionTitle.textContent = question;
     questionGroup.appendChild(questionTitle);
     
+    const questionId = questionObj.id;
+
     choicesArray.forEach((choice, cIndex) => {
       const choiceWrapper = document.createElement("div");
       const inputElement = document.createElement("input");
@@ -159,7 +161,7 @@ function renderChoices(choices) {
       inputElement.required = "required";
       inputElement.value = cIndex;
       inputElement.id = uniqueId;
-      inputElement.name = `question-${difficulty}-${qIndex}`;
+      inputElement.name = questionId;
 
       const label = document.createElement("label");
       label.htmlFor = uniqueId;
@@ -176,13 +178,17 @@ function renderChoices(choices) {
 function formSubmission(event)
 {
     const answers = getAnswers(event.target);
-    //API.submitAnswers(subjectName, getAnswers {"planet-q4": 2, "atomic-q3": 3});
+    console.log(answers);
+
+    const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
+    const processedAnswers = mapObject(answers, (k, v) => v|0);
+    API.submitAnswers(subjectName, processedAnswers);
 }
 
 function getAnswers(formElement) {
   const formData = new FormData(formElement);
   return Object.fromEntries(formData.entries());
-  // console.log(data);
+
   let data = {};
 
   for (let [key, value] of formData.entries()) {
