@@ -1,7 +1,9 @@
+let subjectName = "";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const subjectName = urlParams.get("name") || "";
+  subjectName = urlParams.get("name") || "";
 
   let subjectTitle = subjectName
     .split(" ")
@@ -14,6 +16,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderQuestions(questions);
   const choices = await getChoices(subjectName);
   renderChoices(choices);
+
+  const form = document.getElementById("form");
+  form.addEventListener("submit", (event) => { event.preventDefault(); 
+                                               formSubmission()});
 });
 
 function setupUI(subjectTitle) {
@@ -148,7 +154,8 @@ function renderChoices(choices) {
       const uniqueId = `choice-${difficulty}-${qIndex}-${cIndex}`;
 
       inputElement.type = "radio";
-      inputElement.value = choice;
+      inputElement.required = "required";
+      inputElement.value = cIndex;
       inputElement.id = uniqueId;
       inputElement.name = `question-${difficulty}-${qIndex}`;
 
@@ -162,4 +169,15 @@ function renderChoices(choices) {
 
     parentContainer.appendChild(questionGroup);
   });
+}
+
+function formSubmission()
+{
+    const answers = getAnswers();
+    API.submitAnswers(subjectName, getAnswers {"planet-q4": 2, "atomic-q3": 3});
+}
+
+function getAnswers()
+{
+    
 }
