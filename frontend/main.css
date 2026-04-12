@@ -57,7 +57,7 @@ p
 
 fieldset
 {
-    border: 2px solid #FFC72C;
+    border: 0.5em groove #FFC72C;
     padding: 1em;
     margin-bottom: 1em;
     display: block;
@@ -74,7 +74,7 @@ fieldset
     color: #004C46;
     font-family: Tahoma;
     font-size: 130%;
-    border: none;
+    border: groove #FFC72C;
     padding: 0.5em 1em;
     cursor: pointer;
     display: flex;

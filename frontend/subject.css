@@ -24,9 +24,7 @@ a
 
 fieldset
 {
-    /* background-color: #FFC72C; */
     border: .7em groove #FFC72C;
-    /* color: #004C46; */
 }
 
 
@@ -37,7 +35,6 @@ p
     text-decoration: underline;
 }
 
-/* I want specifically the words within the fieldset, not the questions, to be enlarged. I also want the radio buttons to be green when selected */
 label{
     scale: 1.2;
     font-size: 120%;
@@ -49,4 +46,9 @@ label{
 input{
     scale: 1.2;
     accent-color: #FFC72C;
+}
+
+br
+{
+    width: 100%;
 }
