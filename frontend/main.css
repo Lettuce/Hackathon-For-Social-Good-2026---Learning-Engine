@@ -23,7 +23,7 @@ h1
     color: #FFC72C;
     font-family: Tahoma;
     font-size: 300%;
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
 }
 
 h2
@@ -42,7 +42,6 @@ p
     color: #FFC72C;
     font-family: Tahoma;
     font-size: 120%;
-    text-decoration: none;
 }
 
 #formlegend
@@ -115,7 +114,6 @@ a
     font-family: Tahoma;
     font-size: 130%;
     text-align: center;
-    text-decoration: none;
 }
 
 legend
