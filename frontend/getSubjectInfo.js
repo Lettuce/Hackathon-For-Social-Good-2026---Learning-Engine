@@ -61,10 +61,19 @@ function renderQuestions(questions) {
       return;
     }
 
-    questions.forEach((question) => {
+    questions.forEach((questionObj) => {
       const pTag = document.createElement("p");
-      pTag.textContent = question;
-      easyElement.appendChild(pTag);
+      // Access the string property inside the object
+      pTag.textContent = questionObj.question;
+
+      // Route to the correct container based on the difficulty property
+      if (questionObj.difficulty === "easy") {
+        easyElement.appendChild(pTag);
+      } else if (questionObj.difficulty === "medium") {
+        mediumElement.appendChild(pTag);
+      } else if (questionObj.difficulty === "hard") {
+        hardElement.appendChild(pTag);
+      }
     });
   }
 }
