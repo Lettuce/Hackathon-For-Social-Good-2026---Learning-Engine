@@ -105,12 +105,13 @@ function renderChoices(choices) {
     hard: document.getElementById("hard"),
   };
 
-  // Validate containers exist
+  // Validate and CLEAR containers to prevent duplicates
   for (const [key, element] of Object.entries(containers)) {
     if (!element) {
       console.error(`Target element #${key} not found in DOM`);
       return;
     }
+    element.innerHTML = ""; // Clear the container before rendering
   }
 
   choices.forEach((questionObj, qIndex) => {
@@ -119,17 +120,15 @@ function renderChoices(choices) {
 
     if (!parentContainer) return;
 
-    // Create a grouping container for this specific question
     const questionGroup = document.createElement("div");
     questionGroup.className = "question-group";
 
-    // Add the question text
     const questionTitle = document.createElement("p");
-    questionTitle.textContent = `${qIndex + 1}. ${question}`;
+    questionTitle.textContent = question;
     questionGroup.appendChild(questionTitle);
 
     choicesArray.forEach((choice, cIndex) => {
-      const wrapper = document.createElement("div");
+      const choiceWrapper = document.createElement("div");
       const inputElement = document.createElement("input");
       const uniqueId = `choice-${difficulty}-${qIndex}-${cIndex}`;
 
@@ -142,11 +141,10 @@ function renderChoices(choices) {
       label.htmlFor = uniqueId;
       label.textContent = choice;
 
-      wrapper.append(inputElement, label);
-      questionGroup.appendChild(wrapper);
+      choiceWrapper.append(inputElement, label);
+      questionGroup.appendChild(choiceWrapper);
     });
 
-    // Append the entire group to the difficulty container
     parentContainer.appendChild(questionGroup);
   });
 }
