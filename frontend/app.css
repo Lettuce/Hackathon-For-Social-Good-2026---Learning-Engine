@@ -2,6 +2,7 @@ body
 {
     background-color: #004C46;
     color: #FFC72C;
+    font-family: Tahoma;
 }
 
 h1
@@ -50,4 +51,17 @@ fieldset
     padding: 1em;
     margin-bottom: 1em;
     display: inline-block;
+}
+
+/*I want to make the submit button change color when it is hovered over */
+.submit
+{
+    background-color: #FFC72C;
+    color: #004C46;
+    font-family: Tahoma;
+    font-size: 130%;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    
 }
