@@ -56,7 +56,7 @@ const respondWithJSON = (response, statusCode, message) => {
 };
 
 const serveFile = (response, path) => {
-
+    path = decodeURIComponent(path);
     console.log(`file served: [${path}]`);
 
     let mimeType = undefined;
@@ -104,7 +104,7 @@ app.get('/', (request, response) => {
 });
 
 app.get(/\/.*/, (request, response) => {
-    serveFile(response, 'frontend/' + request.path);
+    serveFile(response, 'frontend' + request.path);
 });
 
 app.post('/api/createuser', (request, response) => {
@@ -141,8 +141,8 @@ app.post('/api/submitanswers', authenticateMiddleware, (request, response) => {
 
 app.post('/api/answeredquestions', authenticateMiddleware, (request, response) => {
     const body = request.body;
-    let user = loadUser(body.auth.username);
     const subject = body.subject;
+    let user = loadUser(body.auth.username);
     respondWithJSON(response, 200, user.progress[subject]);
 });
 
