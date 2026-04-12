@@ -1,11 +1,11 @@
 [
   {
     "id": "res01",
-    "title": "Atomically confined excitons in 2D perovskites for bright and sub-nanosecond scintillation",
+    "title": "Rubble Trouble",
     "type": "article",
-    "url": "https://www.nature.com/articles/s41467-025-67525-7",
-    "description": "A new method uses atomic-level exciton confinement in 2D perovskites to create ultrafast, highly efficient scintillators for advanced radiation imaging.",
-    "difficulty": "hard"
+    "url": "https://www.earthdata.nasa.gov/news/feature-articles/rubble-trouble",
+    "description": "Describes the dangers of space debris, such as the consequences of their orbits colliding.",
+    "difficulty": "medium"
   },
   {
     "id": "res02",

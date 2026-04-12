@@ -1,45 +1,12 @@
 [
   {
-    "id": "atomic-q1",
-    "question": "What is the main goal of improving scintillators in this research?",
-    "description": "Tests basic understanding of the article’s motivation and application.",
-    "choices": ["To reduce the cost of semiconductor manufacturing", 
-                "To improve both response speed and efficiency for radiation detection", 
-                "To increase the size of perovskite crystals", 
-                "To eliminate the need for radiation entirely"],
-    "difficulty": "easy",
-    "resourceId": "res01"
-  },
-  {
-    "id": "atomic-q2",
-    "question": "What strategy do the authors propose to overcome the limitations of traditional scintillators?",
-    "description": "Focuses on understanding the core innovation introduced in the paper.",
-    "choices": ["Increasing the size of molecular structures", 
-                "Using metallic nanoparticles for faster conduction", 
-                "Achieving atomic-level exciton confinement in 2D perovskites", 
-                "Reducing temperature to near absolute zero"],
-    "difficulty": "medium",
-    "resourceId": "res01"
-  },
-  {
-    "id": "atomic-q3",
-    "question": "Why is in-plane octahedral tilting beneficial for exciton confinement?",
-    "description": "Tests understanding of structure-property relationships.",
-    "choices": ["It increases the size of the material", 
-                "It prevents the formation of self-trapped excitons (STE)", 
-                "It reduces the number of atoms in the structure", 
-                "It eliminates all lattice distortions"],
-    "difficulty": "medium",
-    "resourceId": "res01"
-  },
-  {
-    "id": "atomic-q4",
-    "question": "How does (1,4-CMA)PbBr₄ achieve both fast response and high light yield?",
-    "description": "Requires integrating multiple concepts from the article.",
-    "choices": ["By increasing temperature during operation",
-                "By combining strong in-plane distortion with out-of-plane dielectric confinement",
-                "By using rare-earth elements for emission",
-                "By eliminating excitons entirely"],
+    "id": "space-debris-q1",
+    "question": "When big space debris collide at a fast speed, a chain reaction occurs where each collision increases the probability of future collisions with other space debris. What is this chain reaction called?",
+    "description": "Tests a deeper understanding of the orbits of space objects and the consequences of their orbits crossing paths.",
+    "choices": ["Kristen Kressner syndrome",
+                "Clifford DeVoe effect",
+                "Satellite collision effect",
+                "Kessler syndrome"],
     "difficulty": "hard",
     "resourceId": "res01"
   },
