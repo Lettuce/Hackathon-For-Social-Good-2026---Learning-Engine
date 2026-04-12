@@ -3,9 +3,6 @@ body
     background-color: #004C46;
     color: #FFC72C;
     font-family: Tahoma;
-    /* margin:0.5em;
-    display: flex;
-    justify-content: center; */
 }
 
 h1
@@ -17,16 +14,11 @@ h1
     margin-bottom: 0.5em;
 }
 
-h2
+h2, p
 {
     text-align: center;
 }
 
-p
-{
-    text-align: center;
-}
-/* I want to center the fieldset elements and have them appear directly above the username and password fields */
 fieldset
 {
     border: 0.5em groove #FFC72C;
@@ -50,11 +42,16 @@ legend
 
 
 label{
-    /* I want to center the label element directly above the input fields, so they are directly in the center of the fieldset equally*/
     display: block;
     text-align: center;
     font-size: 120%;
     margin-bottom: 0.3em;
+}
+
+input
+{
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
 
 .submit
@@ -68,8 +65,9 @@ label{
     cursor: pointer;
 
     display: block;
-    margin: 1em auto;
+    margin: 0.5em auto;
     text-align: center;
+    margin-top: 0.7em;
 }
 
 .submit:hover
@@ -82,17 +80,9 @@ label{
 
 #username, #password, #usernameForNewAccount, #passwordForNewAccount
 {
-    /* display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1em;
-    scale: 1.2;
-    accent-color: #FFC72C; */
-
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1em;
+    margin-bottom: 1.7em;
     scale: 1.2;
 }
