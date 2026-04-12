@@ -1,12 +1,18 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    overrideFormSubmission("createUserForm", (formAnswers) => {
+    overrideFormSubmission("createUserForm", async (formAnswers) => {
         const {username, password} = formAnswers;
-        API.createUser(username, password);
-        console.log(formAnswers);
+        const success = await API.createUser(username, password);
+        window.alert(success);
+        if(success) loginSuccess();
+        else createUserFail();
     });
 
-    overrideFormSubmission("logInForm", (formAnswers) => {
-        console.log(answerformAnswerss);
+    overrideFormSubmission("logInForm", async (formAnswers) => {
+        const {username, password} = formAnswers;
+        const success = await API.login(username, password);
+        window.alert(success);
+        if(success) loginSuccess();
+        else loginFail();
     });
 });
 
@@ -21,4 +27,16 @@ const overrideFormSubmission = (formId, submitFunction) => {
         const answers = getAnswers(event.target);
         submitFunction(answers);
     });
+};
+
+const loginFail = () => {
+    window.alert("Login failed, either your credentials are wrong or the server is down.");
+};
+
+const createUserFail = () => {
+    window.alert("Account creation failed. Either the account exists already or the server is down.");
+};
+
+const loginSuccess = () => {
+    window.location.href = "/";
 };
