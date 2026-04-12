@@ -11,6 +11,9 @@
     <link href="main.css" 
           type="text/css" rel="stylesheet" />
 
+    <link href="login.css"
+          type="text/css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -18,21 +21,23 @@
     <h2>Welcome to the Learning Engine. Please login or create an account.</h2>
 
     <fieldset><legend>Create Account</legend>
-        <form method="post"
-          action="...">
+        <form method="post" id="createUserForm">
         <input type="text" name="username" id="usernameForNewAccount" placeholder="username">
         <label for="usernameForNewAccount">Enter your username</label>
         <input type="password" name="password" id="passwordForNewAccount" placeholder="password">
         <label for="passwordForNewAccount">Enter your password</label>
+
+        <input type="submit" class="submit" value="Create Account" />
     </form></fieldset>
 
     <fieldset><legend>Log in</legend>
-        <form method="post"
-          action="...">
+        <form method="post" id="logInForm">
         <input type="text" name="username" id="username" placeholder="username">
         <label for="username">Enter your username</label>
         <input type="password" name="password" id="password" placeholder="password">
         <label for="password">Enter your password</label>
+
+        <input type="submit" class="submit" value="Log In" />
     </form></fieldset>
     
 
