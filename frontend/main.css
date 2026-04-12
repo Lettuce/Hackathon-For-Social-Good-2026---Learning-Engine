@@ -19,10 +19,21 @@ h1
 {
     /* display: flex;
     justify-content: center; */
+    text-align: center;
     color: #FFC72C;
     font-family: Tahoma;
     font-size: 300%;
     margin-bottom: 1.5em;
+}
+
+h2
+{
+    text-align: center;
+}
+
+p
+{
+    text-align: center;
 }
 
 .subjects
@@ -34,10 +45,10 @@ h1
     cursor: pointer;
 }
 
-.formlegend
+#formlegend
 {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     color: #FFC72C;
     font-family: Tahoma;
     font-size: 150%;
@@ -52,6 +63,8 @@ fieldset
     display: block;
     width: 33.33%;
     box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*I want to make the submit button change color when it is hovered over */
@@ -65,8 +78,8 @@ fieldset
     padding: 0.5em 1em;
     cursor: pointer;
     display: flex;
-    justify-content: left;
-    
+    flex-direction: column;
+    align-items: center;
 }
 
 .submit:hover
@@ -82,8 +95,26 @@ fieldset
     font-size: 200%;
     border: none;
     padding: 0.5em 1em;
-    cursor: pointer;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     margin-bottom: 0.5em;
+}
+
+#subjects
+{
+    display: block;
+    flex-direction: column;
+    align-items: center;
+}
+
+a
+{
+    color: #FFC72C;
+    font-family: Tahoma;
+    font-size: 130%;
+}
+
+legend
+{
+    text-align: center;
 }
