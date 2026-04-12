@@ -40,7 +40,7 @@ How to add your own questions (assuming you have little to no computer science k
     h. Make sure that each closing curly brace } has a comma after it, except if it's the last question block.
 6. Now set up resources.json
     a. Follow the same steps you did in step 4 for the questions.json file. 
-    b. Find an already-made subject director. 
+    b. Find an already-made subject directory. 
     c. Copy the first block, it should start with "id" and end with "difficulty", that's encapsulated by curly braces {}
     d. Open the new resources.json file that you created in step 3.
     e. Create a set of square brackets []
@@ -52,4 +52,17 @@ How to add your own questions (assuming you have little to no computer science k
     a. In the new questions.json file that you have created, you will recall that we left resourceId blank.
     b. For the resourceId put the id of the resource from resources.json that logically corresponds to the question that you are currently editing.
 9. Set up answers.json
-    a. 
+    a. Follow the same steps you did in step 4 for the questions.json file (and the resources.json file). 
+    b. Find an already-made subject directory.
+    c. Copy what should be the only block that's encapsulated by curly braces {}
+    d. Open the new answers.json file that you created in step 3.
+    e. Paste the block that you just copied.
+10. Edit the answers to logically connect with the right questions
+    a. Take a look at your answers.json file. 
+       You'll notice that it's a list of question id's that correspond to a number between 0 and 3.
+       This is because each number corresponds to a specific choice from the array of choices in the questions.json file.
+       The number 0 corresponds to the first choice in the array, 1 corresponds to the second choice, 
+       2 corresponds to the third option, and 3 corresponds to the fourth option.
+    b. Edit each of the question id's to correspond to the ids you created in your questions.json file from step 5.
+    c. Change each of the numbers next to each of the question ids to correspond to the correct answer for the choices array that connects with that question.
+11. If you would like to add more subjects, repeat steps 3-10. Thanks for reading!
