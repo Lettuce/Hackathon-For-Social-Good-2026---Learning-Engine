@@ -32,7 +32,12 @@ getSubjects().then((subjectsData) => {
     const fieldsetElement = document.createElement("fieldset");
 
     // Configure the link with a query parameter
-    aElement.textContent = subject;
+    let subjectTitle = subject
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+    aElement.textContent = subjectTitle;
     aElement.href = `subject.html?name=${subject}`;
 
     // Nest and append
