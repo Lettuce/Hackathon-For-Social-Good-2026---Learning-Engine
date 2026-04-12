@@ -1,16 +1,5 @@
 [
   {
-    "id": "c-plus-plus-q1",
-    "question": "What data type is often used to represent words or sentences?",
-    "description": "Tests basic understanding of the different data types in C++.",
-    "choices": ["char", 
-                "string", 
-                "double", 
-                "response"],
-    "difficulty": "easy",
-    "resourceId": "res01"
-  },
-  {
     "id": "cs-general-q1",
     "question": "What keyword is used to check whether a condition is true?",
     "description": "Tests basic understanding of the different keywords that are used in almost all coding languages.",
@@ -20,6 +9,28 @@
                 "if/else statements"],
     "difficulty": "easy",
     "resourceId": ""
+  },
+  {
+    "id": "cs-general-q2",
+    "question": "What does Big-O notation represent?",
+    "description": "Tests a deeper understanding of how programs run.",
+    "choices": ["The abnormally large quantity of output", 
+                "The size in megabytes of a database output that exceeds the memory limit", 
+                "The worst-case upper bound of a program", 
+                "The cereal number of a program"],
+    "difficulty": "hard",
+    "resourceId": ""
+  },
+  {
+    "id": "c-plus-plus-q1",
+    "question": "What data type is often used to represent words or sentences?",
+    "description": "Tests basic understanding of the different data types in C++.",
+    "choices": ["char", 
+                "string", 
+                "double", 
+                "response"],
+    "difficulty": "easy",
+    "resourceId": "res01"
   },
   {
     "id": "sql-q1",
@@ -51,17 +62,6 @@
                 "Compiles and runs object oriented programming", 
                 "Styles and formats websites easy use and accessibility", 
                 "Processes server input to return a value to the user"],
-    "difficulty": "hard",
-    "resourceId": ""
-  },
-  {
-    "id": "cs-general-q2",
-    "question": "What does Big-O notation represent?",
-    "description": "Tests a deeper understanding of how programs run.",
-    "choices": ["The abnormally large quantity of output", 
-                "The size in megabytes of a database output that exceeds the memory limit", 
-                "The worst-case upper bound of a program", 
-                "The cereal number of a program"],
     "difficulty": "hard",
     "resourceId": ""
   }

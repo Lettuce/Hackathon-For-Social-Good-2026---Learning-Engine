@@ -1,0 +1,50 @@
+[  
+  {
+    "id": "res01",
+    "title": "An Introduction to Geology",
+    "type": "lesson",
+    "url": "https://opengeology.org/textbook/3-minerals/",
+    "description": "Defines minerals, describes the basic structure of atoms, and has basic information on elements.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res02",
+    "title": "Rocks",
+    "type": "article",
+    "url": "https://www.nps.gov/subjects/geology/rocks.htm",
+    "description": "A quick introduction to the basics of rocks and minerals.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "res03",
+    "title": "Rock cycle",
+    "type": "article",
+    "url": "https://ugc.berkeley.edu/background-content/rock-cycle/",
+    "description": "Describes what the rock cycle is and how it works on a more basic level",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res04",
+    "title": "Superposition",
+    "type": "article",
+    "url": "https://education.nationalgeographic.org/resource/superposition/",
+    "description": "Describes the geological principle known as superposition.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res05",
+    "title": "Mineral Hardness, Cleavage, and Fracture",
+    "type": "lesson",
+    "url": "https://open.maricopa.edu/geologylab/chapter/mineral-hardness-cleavage-and-fracture/",
+    "description": "Describes different ways in which you can break minerals.",
+    "difficulty": "hard"
+  },
+  {
+    "id": "res06",
+    "title": "Hardness",
+    "type": "lesson",
+    "url": "https://geo.libretexts.org/Bookshelves/Geology/Gemology/08:_Hardness/8.01:_Hardness",
+    "description": "Describes one of the components that defines the durability of gemstones",
+    "difficulty": "hard"
+  }
+]

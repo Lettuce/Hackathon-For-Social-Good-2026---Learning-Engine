@@ -1,0 +1,66 @@
+[
+  {
+    "id": "geog-mineral-q1",
+    "question": "Which of the following is a mineral?",
+    "description": "Tests basic understanding of the different kinds of minerals, and what isn't a mineral.",
+    "choices": ["Sandstone", 
+                "Quartz", 
+                "Granite", 
+                "Andesite"],
+    "difficulty": "easy",
+    "resourceId": "res01"
+  },
+  {
+    "id": "geog-mineral-q2",
+    "question": "What is the difference between Cleavage and Fracture when identifying minerals?",
+    "description": "Tests a more moderate understanding of minerals, and specifically what they look like when they are broken.",
+    "choices": ["Cleavage is the tendency to break along round, rugged lines. A fracture is straight, smooth, or regular surfaces.", 
+                "Cleavage is when minerals crack randomly. A fracture is when lines are less rough and break evenly.", 
+                "Cleavage is when rocks have a long line down the middle. A fracture is a clean break without rugged surfaces.",
+                "Cleavage is the tendency to break along flat, smooth lines. A fracture is irregular, uneven, or curved surfaces."],
+    "difficulty": "hard",
+    "resourceId": "res05"
+  },
+  {
+    "id": "geog-mineral-q3",
+    "question": "Which of the following explains why diamonds and pencil lead are so different in hardness, even when they are both carbon?",
+    "description": "Tests a deeper understanding of how minerals are made up and what their structure is.",
+    "choices": ["Their atomic bond strengths are different",
+                "Their carbon atom counts are different", 
+                "Their atomic structures are different",
+                "The free electrons along the outer shell of diamonds cause diamonds to be more reactive than pencil lead."],
+    "difficulty": "hard",
+    "resourceId": "res06"
+  },
+  {
+    "id": "geog-rock-q1",
+    "question": "Which of the following isn't a main type of rock?",
+    "description": "Tests basic understanding of the different kinds of rocks.",
+    "choices": ["Igneous", 
+                "Sedimentary", 
+                "Metamorphic", 
+                "Extraneous"],
+    "difficulty": "easy",
+    "resourceId": "res02"
+  },
+  {
+    "id": "geog-rock-q2",
+    "question": "How does a sedimentary rock become metamorphic?",
+    "description": "Tests basic understanding of the way in which rocks are created.",
+    "choices": ["Intense heat and pressure", 
+                "Liquid nitrogen and battery acid", 
+                "Intense freezing and tension", 
+                "Molten lava and water"],
+    "difficulty": "medium",
+    "resourceId": "res03"
+  },
+  {
+    "id": "geog-rock-q3",
+    "question": "What is the \"Principle of superposition\" in geology?",
+    "description": "Tests a more moderate understanding of geology principles.",
+    "choices": ["In undisturbed rocks, the youngest is at the bottom and layers above are progressively older", 
+                "In undisturbed rocks, the oldest is at the bottom and layers above are progressively younger"],
+    "difficulty": "medium",
+    "resourceId": "res04"
+  }
+]
