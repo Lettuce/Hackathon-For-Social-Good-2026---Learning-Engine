@@ -123,10 +123,7 @@ function renderChoices(choices) {
     const questionTitle = document.createElement("p");
     questionTitle.textContent = question;
     questionGroup.appendChild(questionTitle);
-
-    const linebrake = document.createElement("br");
-    questionGroup.appendChild(linebrake);
-
+    
     choicesArray.forEach((choice, cIndex) => {
       const choiceWrapper = document.createElement("div");
       const inputElement = document.createElement("input");
