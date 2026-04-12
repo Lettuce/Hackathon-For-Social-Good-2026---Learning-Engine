@@ -17,9 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function setupUI(subjectTitle) {
-  const legendElement = document.getElementById("formlegend");
-  if (legendElement) legendElement.textContent = `${subjectTitle} Questions`;
-
   const h1Element = document.getElementById("h1");
   if (h1Element) h1Element.textContent = subjectTitle;
 }
