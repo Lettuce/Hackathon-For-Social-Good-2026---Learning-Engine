@@ -11,8 +11,6 @@ const loadJSON = (path) => {
 };
 
 const saveJSON = (path, data) => {
-    console.log(data.progress);
-    console.log(JSON.stringify(data.progress, null, 4));
     fs.writeFileSync(path, JSON.stringify(data, null, 4), 'utf8');
 };
 
@@ -83,7 +81,7 @@ const createUser = (auth) => {
         return false;
     }
     
-    const user = new User(auth, []);
+    const user = new User(auth, {});
     user.save();
     return true;
 };
@@ -96,15 +94,15 @@ const authenticateMiddleware = (request, response, next) => {
     next()
 };
 
-app.get('/data/:path', (request, response) => {
-    serveFile(response, 'backend/data/' + request.params.path);
+app.get(/data.*/, (request, response) => {
+    serveFile(response, 'backend' + request.path);
 });
 
 app.get('/', (request, response) => {
     serveFile(response, 'frontend/index.html');
 });
 
-app.get('/:path', (request, response) => {
+app.get(/.*/, (request, response) => {
     serveFile(response, 'frontend/' + request.params.path);
 });
 
@@ -129,15 +127,26 @@ app.post('/api/submitanswers', authenticateMiddleware, (request, response) => {
 
     const result = answers.map(isCorrect);
 
-    if(!(user.progress.includes(subject))) {
+    if(!(subject in user.progress)) {
         user.progress[subject] = []
     }
 
     const toAdd = answers.filter(isCorrect).filter(item => !(user.progress[subject].includes(item.questionId))).map(item => item.questionId);
     
-    user.progress[subject].push(toAdd);
+    user.progress[subject].push(...toAdd);
     user.save();
     respondWithJSON(response, 200, result);
+});
+
+app.post('/api/answeredquestions', authenticateMiddleware, (request, response) => {
+    const body = request.body;
+    let user = loadUser(body.auth.username);
+    const subject = body.subject;
+    respondWithJSON(response, 200, user.progress[subject]);
+});
+
+app.post('/api/vaildateauthentication', authenticateMiddleware, (request, response) => {
+    respondWithJSON(response, 200, {success: true});
 });
 
 const PORT = 5500;
