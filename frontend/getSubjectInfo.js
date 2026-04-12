@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     .join(" ");
 
   setupUI(subjectTitle);
+  
+  const questions = await getQuestions(subjectName);
+  renderQuestions(questions);
 });
 
 function setupUI(subjectTitle) {
@@ -20,7 +23,7 @@ function setupUI(subjectTitle) {
 }
 
 function getQuestions(subjectName) {
-  return fetch(`../backend/data/${subjectName}/questions.json`)
+  return fetch(`/data/subjects/${subjectName}/questions.json`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -28,28 +31,40 @@ function getQuestions(subjectName) {
       return response.json();
     })
     .then((data) => {
-      return data.map((item) => item.questions);
+      return Array.isArray(data) ? data : data.questions;
     })
     .catch((error) => {
-      console.error("Could not fetch subjects:", error);
-      return null;
+      console.error("Could not fetch questions:", error);
+      return [];
     });
 }
 
 function renderQuestions(questions) {
   if (questions) {
     console.log("Fetched Subjects Data:", questions);
-    const questionsElement = document.getElementById("questions");
+    const easyElement = document.getElementById("easy");
+    const mediumElement = document.getElementById("medium");
+    const hardElement = document.getElementById("hard");
 
-    if (!questionsElement) {
-      console.error("Target element #questions not found in DOM");
+    if (!easyElement) {
+      console.error("Target element #eazy not found in DOM");
+      return;
+    }
+
+    if (!mediumElement) {
+      console.error("Target element #medium not found in DOM");
+      return;
+    }
+
+    if (!hardElement) {
+      console.error("Target element #hard not found in DOM");
       return;
     }
 
     questions.forEach((question) => {
       const pTag = document.createElement("p");
       pTag.textContent = question;
-      questionsElement.appendChild(pTag);
+      easyElement.appendChild(pTag);
     });
   }
 }
