@@ -1,37 +1,30 @@
 [
   {
     "answer": 1,
-    "resourceId": "res01",
     "questionId": "geog-mineral-q1"
   },
   {
     "answer": 3,
-    "resourceId": "res05",
     "questionId": "geog-mineral-q2"
   },
   {
     "answer": 3,
-    "resourceId": "res06",
     "questionId": "geog-mineral-q3"
   },
   {
     "answer": 1,
-    "resourceId": "res02",
     "questionId": "geog-rock-q1"
   },
   {
     "answer": 0,
-    "resourceId": "res03",
     "questionId": "geog-rock-q2"
   },
   {
     "answer": 1,
-    "resourceId": "res04",
     "questionId": "geog-rock-q3"
   },
   {
     "answer": 2,
-    "resourceId": "res06",
     "questionId": "geog-mineral-q3"
   }
 ]

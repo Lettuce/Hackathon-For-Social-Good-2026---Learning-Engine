@@ -1,32 +1,26 @@
 [
   {
     "answer": 1,
-    "resourceId": "",
     "questionId": "c-plus-plus-q1"
   },
   {
     "answer": 3,
-    "resourceId": "",
     "questionId": "cs-gen-q1"
   },
   {
     "answer": 3,
-    "resourceId": "",
     "questionId": "sql-q1"
   },
   {
     "answer": 3,
-    "resourceId": "",
     "questionId": "html-q1"
   },
   {
     "answer": 0,
-    "resourceId": "",
     "questionId": "php-q1"
   },
   {
     "answer": 2,
-    "resourceId": "",
     "questionId": "cs-general-q2"
   }
 ]
