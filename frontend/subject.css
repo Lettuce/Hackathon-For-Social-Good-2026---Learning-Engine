@@ -3,6 +3,11 @@ body
     display:block;
 }
 
+h2
+{
+    font-size: 250%;
+}
+
 form
 {
     margin-left: auto;
@@ -25,6 +30,7 @@ a
 fieldset
 {
     border: .7em groove #FFC72C;
+    width: 40%;
 }
 
 
@@ -62,4 +68,9 @@ img
     margin-bottom: 2em;
     width: 50%;
     border-collapse: collapse;
+}
+
+.submit
+{
+    margin-top: 1.5em;
 }

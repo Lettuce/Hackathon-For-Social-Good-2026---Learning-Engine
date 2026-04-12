@@ -31,6 +31,13 @@ h2
     text-align: center;
 }
 
+h3
+{
+    text-align: center;
+    font-size: 150%;
+    font-weight: bold;
+}
+
 p
 {
     text-align: center;
@@ -60,7 +67,7 @@ fieldset
     padding: 1em;
     margin-bottom: 1em;
     display: block;
-    width: 33.33%;
+    width: 25%;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
