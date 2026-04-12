@@ -175,14 +175,28 @@ function renderChoices(choices) {
   });
 }
 
-function formSubmission(event)
+async function formSubmission(event)
 {
     const answers = getAnswers(event.target);
     console.log(answers);
 
     const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
     const processedAnswers = mapObject(answers, (k, v) => v|0);
-    API.submitAnswers(subjectName, processedAnswers);
+    let feedback = await API.submitAnswers(subjectName, processedAnswers);
+
+    feedback = Object.entries(feedback).map(([k, v]) => v);
+    feedback = feedback.filter((i) => i);
+    const trueAnswers = feedback.length;
+  
+    console.log(trueAnswers);
+
+    const result = document.createElement("div");
+    const resultText = document.createElement("p");
+    
+    resultText.textContent = `You got ${trueAnswers} correct out of 6`;
+    result.appendChild(resultText);
+    const body = document.getElementById("body");
+    body.appendChild(result);
 }
 
 function getAnswers(formElement) {
