@@ -17,8 +17,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function setupUI(subjectTitle) {
+  const imageMap = {
+    Astronomy:
+      "https://upload.wikimedia.org/wikipedia/commons/b/b8/Laser_Towards_Milky_Ways_Centre.jpg",
+    Biology: "https://www.susla.edu/assets/susla/images/Biology.jpg",
+    Chemistry:
+      "https://www.chemicals.co.uk/wp-content/uploads/2021/09/molecules-and-formula-graphic-scaled.jpg.webp",
+    "Computer Science":
+      "https://blog.engineering.vanderbilt.edu/hubfs/AdobeStock_588772865.jpeg",
+    Geology:
+      "https://upload.wikimedia.org/wikipedia/commons/c/c6/Marsh_Butte_and_Geikie_Peak%2C_Grand_Canyon.jpg",
+  };
+
   const h1Element = document.getElementById("h1");
   if (h1Element) h1Element.textContent = subjectTitle;
+
+  const imgElement = document.getElementById("img");
+  if (imgElement && imageMap[subjectTitle]) {
+    imgElement.src = imageMap[subjectTitle];
+    imgElement.alt = `Illustration for ${subjectTitle}`;
+  }
 }
 
 function getQuestions(subjectName) {
