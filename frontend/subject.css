@@ -24,18 +24,29 @@ a
 
 fieldset
 {
-    background-color: #FFC72C;
+    /* background-color: #FFC72C; */
     border: .7em groove #FFC72C;
-    color: #004C46;
+    /* color: #004C46; */
 }
 
 
-#hard   input[type="radio"],
-#medium input[type="radio"],
-#easy   input[type="radio"]
+p 
 {
-    /* I want to make the radio buttons larger and more visible, and I want the select button to be a little bit away from the words */
     font-size: 150%;
-    margin-right: 0.5em;
+    font-weight: bold;
+    text-decoration: underline;
+}
 
+/* I want specifically the words within the fieldset, not the questions, to be enlarged. I also want the radio buttons to be green when selected */
+label{
+    scale: 1.2;
+    font-size: 120%;
+    margin-right: 1.5em;
+    margin-left: 0.8em;
+    accent-color: #FFC72C;
+}
+
+input{
+    scale: 1.2;
+    accent-color: #FFC72C;
 }
