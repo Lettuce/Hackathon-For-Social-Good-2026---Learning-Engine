@@ -154,6 +154,23 @@ app.post('/api/answeredquestions', express.json(), authenticateMiddleware, (req,
 
 app.post('/api/vaildateauthentication', express.json(), authenticateMiddleware, (req, resp) => respondWithJSON(resp, 200, {success: true}));
 
+// app.post('/api/subjectcompletion', express.json(), authenticateMiddleware, (req, resp) => {
+//     const body = req.body;
+//     const user = loadUser(body.auth.username);
+//     const subjects = loadJSON('backend/data/subjects.json').subject;
+//     const isSubjectComplete = (subject) => {
+//         const userAnswers = user.progress[subject];
+//         console.log(userAnswers.length)
+//         if(userAnswers === undefined) return false;
+//         const subjectAnswers = loadJSON(`backend/data/subjects/${subject}/answers.json`);
+//         const mapped = Object.entries(subjectAnswers).map((answer) => userAnswers.includes(answer));
+//         console.log(mapped);
+//         return mapped.every((i)=>i);
+//     };
+//     const result = Object.fromEntries(subjects.map((subject) => [subject, isSubjectComplete(subject)]));
+//     respondWithJSON(resp, 200, result);
+// });
+
 const PORT = 5500;
 app.listen(PORT);
 
