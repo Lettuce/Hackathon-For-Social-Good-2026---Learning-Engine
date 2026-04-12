@@ -1,6 +1,7 @@
 import fs   from 'node:fs';
 import mime from 'mime/lite';
 import express from 'express';
+import url from 'node:url'
 
 let app = express();
 
@@ -94,7 +95,7 @@ const authenticateMiddleware = (request, response, next) => {
     next()
 };
 
-app.get(/data.*/, (request, response) => {
+app.get(/\/data\/.*/, (request, response) => {
     serveFile(response, 'backend' + request.path);
 });
 
@@ -102,8 +103,8 @@ app.get('/', (request, response) => {
     serveFile(response, 'frontend/index.html');
 });
 
-app.get(/.*/, (request, response) => {
-    serveFile(response, 'frontend/' + request.params.path);
+app.get(/\/.*/, (request, response) => {
+    serveFile(response, 'frontend/' + request.path);
 });
 
 app.post('/api/createuser', (request, response) => {
