@@ -14,8 +14,6 @@ const verifyPassword = (password, hashed) => hash(password, hashed.salt).toStrin
 
 let app = express();
 
-app.use(express.json());
-
 const loadJSON = (path) => {
     return JSON.parse(fs.readFileSync(path, 'utf8'));
 };
@@ -111,7 +109,7 @@ app.get('/', (req, resp) => serveFile(resp, 'frontend/index.html'));
 
 app.get(/\/.*/, (req, resp) => serveFile(resp, 'frontend' + req.path));
 
-app.post('/api/createuser', (req, resp) => {
+app.post('/api/createuser', express.json(), (req, resp) => {
     const body = req.body;
     const success = createUser(body.auth);
     respondWithJSON(resp, success?201:409, {success: success});
@@ -122,13 +120,16 @@ app.post('/api/createuser', (req, resp) => {
 //     next();
 // };
 
-app.post('/api/submitanswers', authenticateMiddleware, (req, resp) => {
+app.post('/api/submitanswers', express.json(), authenticateMiddleware, (req, resp) => {
     const body = req.body;
     let user = loadUser(body.auth.username);
     const answers = body.answers;
     const subject = body.subject;
     const subjectAnswers = loadJSON('backend/data/subjects/' + subject + '/answers.json');
     let answersMap = new Map();
+    for (const [key, value] of myMap) {
+        console.log(key, value);
+    };
     subjectAnswers.forEach((item, index, array) => {
         answersMap.set(item.questionId, item.answer);
     });
@@ -148,14 +149,14 @@ app.post('/api/submitanswers', authenticateMiddleware, (req, resp) => {
     respondWithJSON(resp, 200, result);
 });
 
-app.post('/api/answeredquestions', authenticateMiddleware, (req, resp) => {
+app.post('/api/answeredquestions', express.json(), authenticateMiddleware, (req, resp) => {
     const body = req.body;
     const subject = body.subject;
     let user = loadUser(body.auth.username);
     respondWithJSON(resp, 200, user.progress[subject]);
 });
 
-app.post('/api/vaildateauthentication', authenticateMiddleware, (req, resp) => respondWithJSON(resp, 200, {success: true}));
+app.post('/api/vaildateauthentication', express.json(), authenticateMiddleware, (req, resp) => respondWithJSON(resp, 200, {success: true}));
 
 const PORT = 5500;
 app.listen(PORT);

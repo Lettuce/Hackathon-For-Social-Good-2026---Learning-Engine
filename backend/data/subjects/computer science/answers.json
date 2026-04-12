@@ -1,26 +1,8 @@
-[
-  {
-    "answer": 1,
-    "questionId": "c-plus-plus-q1"
-  },
-  {
-    "answer": 3,
-    "questionId": "cs-gen-q1"
-  },
-  {
-    "answer": 3,
-    "questionId": "sql-q1"
-  },
-  {
-    "answer": 3,
-    "questionId": "html-q1"
-  },
-  {
-    "answer": 0,
-    "questionId": "php-q1"
-  },
-  {
-    "answer": 2,
-    "questionId": "cs-general-q2"
-  }
-]
+{
+  "c-plus-plus-q1": 1,
+  "cs-gen-q1": 3,
+  "sql-q1": 3,
+  "html-q1": 3,
+  "php-q1": 0,
+  "cs-general-q2": 2
+}
