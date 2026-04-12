@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     overrideFormSubmission("createUserForm", async (formAnswers) => {
         const {username, password} = formAnswers;
         const success = await API.createUser(username, password);
-        window.alert(success);
         if(success) loginSuccess();
         else createUserFail();
     });
@@ -10,7 +9,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     overrideFormSubmission("logInForm", async (formAnswers) => {
         const {username, password} = formAnswers;
         const success = await API.login(username, password);
-        window.alert(success);
         if(success) loginSuccess();
         else loginFail();
     });
