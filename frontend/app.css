@@ -10,8 +10,8 @@ body
 
 .container
 {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     width: 100%;
 }
 
@@ -27,8 +27,7 @@ h1
 
 .subjects
 {
-    display: flex;
-    justify-content: center;
+    margin: auto 0;
     color: #FFC72C;
     font-family: Tahoma;
     font-size: 130%;
