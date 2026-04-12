@@ -24,19 +24,27 @@
     "difficulty": "medium"
   },
   {
-    "id": "res02",
-    "title": "",
-    "type": "",
-    "url": "",
-    "description": "",
-    "difficulty": ""
+    "id": "res04",
+    "title": "What's the Most Abundant Element on Earth?",
+    "type": "article",
+    "url": "https://www.thoughtco.com/most-abundant-element-in-the-universe-602186",
+    "description": "A very quick introduction to several of the most abundant elements on Earth.",
+    "difficulty": "medium"
   },
   {
-    "id": "res02",
-    "title": "Bio-",
+    "id": "res05",
+    "title": "Francium in water|Reaction of all Alkali Metals in Water!",
     "type": "video",
-    "url": "",
-    "description": "",
-    "difficulty": ""
+    "url": "https://www.youtube.com/watch?v=1c6McnSdOg8",
+    "description": "Demonstration of the incredible reactions of some alkali metals, some of which are even explosive.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "res06",
+    "title": "Characteristics of exposure to radioactive iodine during a nuclear incident",
+    "type": "article",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11604265/",
+    "description": "Describes the half-lifes of many isotpes of radioactive iodine that were released after a nuclear fission accident.",
+    "difficulty": "hard"
   }
 ]

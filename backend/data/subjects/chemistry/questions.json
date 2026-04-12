@@ -39,7 +39,7 @@
                 "Helium", 
                 "Hydrogen"],
     "difficulty": "medium",
-    "resourceId": ""
+    "resourceId": "res04"
   },
   {
     "id": "chem-elem-q3",
@@ -50,7 +50,7 @@
                 "Gold",
                 "Francium"],
     "difficulty": "hard",
-    "resourceId": ""
+    "resourceId": "res05"
   },
   {
     "id": "chem-elem-q4",
@@ -61,6 +61,6 @@
                 "Iodine-131",
                 "Cesium-137"],
     "difficulty": "hard",
-    "resourceId": ""
+    "resourceId": "res06"
   }
 ]
