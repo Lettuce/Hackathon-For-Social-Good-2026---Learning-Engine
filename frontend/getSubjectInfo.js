@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   const questions = await getQuestions(subjectName);
   renderQuestions(questions);
+  const choices = await getChoices(subjectName);
+  renderChoices(choices);
 });
 
 function setupUI(subjectTitle) {
@@ -41,7 +43,6 @@ function getQuestions(subjectName) {
 
 function renderQuestions(questions) {
   if (questions) {
-    console.log("Fetched Subjects Data:", questions);
     const easyElement = document.getElementById("easy");
     const mediumElement = document.getElementById("medium");
     const hardElement = document.getElementById("hard");
@@ -76,4 +77,76 @@ function renderQuestions(questions) {
       }
     });
   }
+}
+
+function getChoices(subjectName) {
+  return fetch(`/data/subjects/${subjectName}/questions.json`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return Array.isArray(data) ? data : data.choices;
+    })
+    .catch((error) => {
+      console.error("Could not fetch questions:", error);
+      return [];
+    });
+}
+
+function renderChoices(choices) {
+  if (!choices) return;
+
+  const containers = {
+    easy: document.getElementById("easy"),
+    medium: document.getElementById("medium"),
+    hard: document.getElementById("hard"),
+  };
+
+  // Validate containers exist
+  for (const [key, element] of Object.entries(containers)) {
+    if (!element) {
+      console.error(`Target element #${key} not found in DOM`);
+      return;
+    }
+  }
+
+  choices.forEach((questionObj, qIndex) => {
+    const { choices: choicesArray, difficulty, question } = questionObj;
+    const parentContainer = containers[difficulty];
+
+    if (!parentContainer) return;
+
+    // Create a grouping container for this specific question
+    const questionGroup = document.createElement("div");
+    questionGroup.className = "question-group";
+
+    // Add the question text
+    const questionTitle = document.createElement("p");
+    questionTitle.textContent = `${qIndex + 1}. ${question}`;
+    questionGroup.appendChild(questionTitle);
+
+    choicesArray.forEach((choice, cIndex) => {
+      const wrapper = document.createElement("div");
+      const inputElement = document.createElement("input");
+      const uniqueId = `choice-${difficulty}-${qIndex}-${cIndex}`;
+
+      inputElement.type = "radio";
+      inputElement.value = choice;
+      inputElement.id = uniqueId;
+      inputElement.name = `question-${difficulty}-${qIndex}`;
+
+      const label = document.createElement("label");
+      label.htmlFor = uniqueId;
+      label.textContent = choice;
+
+      wrapper.append(inputElement, label);
+      questionGroup.appendChild(wrapper);
+    });
+
+    // Append the entire group to the difficulty container
+    parentContainer.appendChild(questionGroup);
+  });
 }
