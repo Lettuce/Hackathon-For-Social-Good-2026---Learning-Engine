@@ -4,14 +4,8 @@
         "password": "testpassword"
     },
     "subject": "astronomy",
-    "answers": [
-        {
-            "questionId": "planet-q4",
-            "answer": 2
-        },
-        {
-            "questionId": "atomic-q3",
-            "answer": 3
-        }
-    ]
+    "answers": {
+        "planet-q4": 2,
+        "atomic-q3": 3
+    }
 }

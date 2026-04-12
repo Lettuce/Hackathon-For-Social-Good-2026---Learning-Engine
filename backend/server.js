@@ -3,6 +3,9 @@ import fs      from 'node:fs';
 import mime    from 'mime/lite';
 import express from 'express';
 
+
+const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
+
 const hash = (password, salt) => crypto.scryptSync(password, salt, 32);
 
 const generateSaltedHash = (password) => {
@@ -125,24 +128,17 @@ app.post('/api/submitanswers', express.json(), authenticateMiddleware, (req, res
     let user = loadUser(body.auth.username);
     const answers = body.answers;
     const subject = body.subject;
-    const subjectAnswers = loadJSON('backend/data/subjects/' + subject + '/answers.json');
-    let answersMap = new Map();
-    for (const [key, value] of myMap) {
-        console.log(key, value);
-    };
-    subjectAnswers.forEach((item, index, array) => {
-        answersMap.set(item.questionId, item.answer);
-    });
+    const subjectAnswers = new Map(Object.entries(loadJSON('backend/data/subjects/' + subject + '/answers.json')));
 
-    const isCorrect = item => answersMap.get(item.questionId)==item.answer;
+    const isCorrect = (k, v) => (subjectAnswers.get(k)===v);
 
-    const result = answers.map(isCorrect);
+    const result = mapObject(answers, isCorrect);
 
     if(!(subject in user.progress)) {
-        user.progress[subject] = []
+        user.progress[subject] = [];
     }
 
-    const toAdd = answers.filter(isCorrect).filter(item => !(user.progress[subject].includes(item.questionId))).map(item => item.questionId);
+    const toAdd = Object.entries(result).filter(([k, v]) => v).filter(([k, v]) => !(user.progress[subject].includes(k))).map(([k, v]) => k);
     
     user.progress[subject].push(...toAdd);
     user.save();

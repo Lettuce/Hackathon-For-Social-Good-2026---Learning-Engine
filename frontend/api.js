@@ -17,24 +17,15 @@ class Auth {
     static remove = () => {
         sessionStorage.removeItem('user_auth');
     }
-    verify = () => {
-        return fetch('/api/vaildateauthentication', {
-            method: 'POST',
-            body: JSON.stringify({auth: this}),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then((response) => response.ok).catch(() => false);
-    };
 };
 
 
 class API {
-    static sendRequest = async (endpoint, data) => {
+    static sendRequest = async (endpoint, data={}, auth=false) => {
         try {
             const response = await fetch(endpoint, {
                 method: 'POST',
-                body: JSON.stringify({auth: Auth.load(), ...data}),
+                body: JSON.stringify(auth ? {auth: Auth.load(), ...data} : data),
                 headers: {
                     "Content-Type": "application/json",
                 }
@@ -59,17 +50,30 @@ class API {
     // get current username and password, returns null if there is none
     static currentAuth = () => Auth.load();
 
+    // check if the user is logged in (doesn't do validation)
     static loggedIn = () => !(this.currentAuth()===null);
 
-    // returns an array of answered [questionId]s
-    static getAnsweredQuestions = (auth, subject) => this.sendRequest('/api/answeredquestions', { subject: subject });
+    // returns true if the user's credentials are correct, false otherwise (btw it returns false even on errors, which is how it works)
+    static verifyAuth = () => sendRequest('/api/vaildateauthentication', data={}, auth=true) ?? false;
 
-    // returns an array of booleans, true if the answer was correct for the corresponding question
-    static submitAnswers = (auth, subject, answers) => this.sendRequest('/api/submitanswers', { subject: subject, answers: answers });
+    // returns an array of answered questionIds
+    static getAnsweredQuestions = (subject) => this.sendRequest('/api/answeredquestions', data={ subject: subject }, auth=true);
+
+    // return the answers object, but with the answer indices replaced with if the answer was correct or not
+    static submitAnswers = (subject, answers) => this.sendRequest('/api/submitanswers', data={ subject: subject, answers: answers }, auth=true);
+
+    // returns true if the user's credentials are correct, false otherwise (even on errors)
+    static createUser = (username, password) => {
+        const userAuth = new Auth(username, password);
+        const result = sendRequest('/api/createuser', data={auth:userAuth}, auth=false)?.success ?? false;
+        if(!result) return false;
+        userAuth.save();
+        return true;
+    };
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
-    console.log(API.login("testuser", "testpassword"));
-    const res = await API.submitAnswers(Auth.load(), 'astronomy', {"planet-q4": 2, "atomic-q3": 3});
-    console.log(res);
-});
+// document.addEventListener("DOMContentLoaded", async () => {
+//     console.log(API.login("testuser", "testpassword"));
+//     const res = await API.submitAnswers(Auth.load(), 'astronomy', {"planet-q4": 2, "atomic-q3": 3});
+//     console.log(res);
+// });
