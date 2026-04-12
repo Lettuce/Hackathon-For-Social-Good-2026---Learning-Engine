@@ -51,7 +51,9 @@ fieldset
     border: 2px solid #FFC72C;
     padding: 1em;
     margin-bottom: 1em;
-    display: inline-block;
+    display: block;
+    width: 33.33%;
+    box-sizing: border-box;
 }
 
 /*I want to make the submit button change color when it is hovered over */
@@ -67,4 +69,10 @@ fieldset
     display: flex;
     justify-content: left;
     
+}
+
+.submit:hover
+{
+    background-color: #e6b800; /* slightly darker yellow */
+    color: #002f2b; /* darker text */
 }
