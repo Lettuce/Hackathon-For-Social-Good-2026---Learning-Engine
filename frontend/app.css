@@ -1,6 +1,7 @@
 body
 {
     background-color: #004C46;
+    color: #FFC72C;
 }
 
 h1
@@ -31,4 +32,22 @@ h2
     font-family: Tahoma;
     font-size: 130%;
     cursor: pointer;
+}
+
+.formlegend
+{
+    display: flex;
+    justify-content: left;
+    color: #FFC72C;
+    font-family: Tahoma;
+    font-size: 150%;
+    text-decoration: underline;
+}
+
+fieldset
+{
+    border: 2px solid #FFC72C;
+    padding: 1em;
+    margin-bottom: 1em;
+    display: inline-block;
 }
