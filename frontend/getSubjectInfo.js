@@ -177,7 +177,15 @@ function formSubmission()
     API.submitAnswers(subjectName, getAnswers {"planet-q4": 2, "atomic-q3": 3});
 }
 
-function getAnswers()
-{
-    
+function getAnswers(formElement) {
+  const formData = new FormData(formElement);
+  const data = {};
+
+  for (let [key, value] of formData.entries()) {
+    // value is returned as a string from FormData, 
+    // convert to Number if your API expects integers
+    data[key] = parseInt(value, 10);
+  }
+
+  return data;
 }
