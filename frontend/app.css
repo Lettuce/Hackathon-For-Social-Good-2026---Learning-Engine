@@ -73,6 +73,19 @@ fieldset
 
 .submit:hover
 {
-    background-color: #e6b800; /* slightly darker yellow */
-    color: #002f2b; /* darker text */
+    background-color: #e6b800; 
+    color: #002f2b; 
+}
+
+.easy, .medium, .hard
+{
+    color: #FFC72C;
+    font-family: Tahoma;
+    font-size: 200%;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: left;
+    margin-bottom: 0.5em;
 }
