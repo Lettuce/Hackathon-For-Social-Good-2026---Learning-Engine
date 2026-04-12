@@ -1,5 +1,5 @@
 function getSubjects() {
-  return fetch("../backend/data/subjects.json")
+  return fetch("/data/subjects.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
