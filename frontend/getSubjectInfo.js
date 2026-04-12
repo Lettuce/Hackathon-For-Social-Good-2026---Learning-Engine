@@ -18,8 +18,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderChoices(choices);
 
   const form = document.getElementById("form");
-  form.addEventListener("submit", (event) => { event.preventDefault(); 
-                                               formSubmission()});
+  form.addEventListener("submit", (event) => {
+    event.preventDefault(); 
+    formSubmission(event)
+  });
 });
 
 function setupUI(subjectTitle) {
@@ -171,15 +173,17 @@ function renderChoices(choices) {
   });
 }
 
-function formSubmission()
+function formSubmission(event)
 {
-    const answers = getAnswers();
+    const answers = getAnswers(event.target);
     //API.submitAnswers(subjectName, getAnswers {"planet-q4": 2, "atomic-q3": 3});
 }
 
 function getAnswers(formElement) {
   const formData = new FormData(formElement);
-  const data = {};
+  return Object.fromEntries(formData.entries());
+  // console.log(data);
+  let data = {};
 
   for (let [key, value] of formData.entries()) {
     // value is returned as a string from FormData, 
