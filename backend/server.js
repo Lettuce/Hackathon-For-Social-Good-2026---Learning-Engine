@@ -43,24 +43,13 @@ const saveJSON = async (filepath, data) => {
     }
 };
 
-const getUserFileName = (username) => {
-    return 'backend/userdata/' + path.normalize(username) + '.json';
-}
-const userExists = (username) => {
-    return fs.existsSync(getUserFileName(username));
-};
+const getUserFileName = (username) => 'backend/userdata/' + path.normalize(username) + '.json';
 
-const saveUser = async (userdata) => {
-    return saveJSON(getUserFileName(userdata.auth.username), userdata);
-};
+const userExists = (username) => fs.existsSync(getUserFileName(username));
 
-const loadUser = async (username) => {
-    try {
-        return await loadJSON(getUserFileName(username));
-    } catch(err) {
-        return null;
-    }
-};
+const saveUser = async (userdata) => await saveJSON(getUserFileName(userdata.auth.username), userdata);
+
+const loadUser = async (username) => await loadJSON(getUserFileName(username));
 
 const serveFile = (resp, filepath) => {
     filepath = path.normalize(decodeURIComponent(filepath));
@@ -123,7 +112,7 @@ app.post('/api/submitanswers', express.json(), getUserMiddleware, async (req, re
 
     const result = mapObject(answers, (k, v) => (subjectAnswers[k]===v));
 
-    const toAdd = Object.entries(result).filter(([k, v]) => v).filter(([k, v]) => v && !(userData.progress[subject].includes(k))).map(([k, v]) => k);
+    const toAdd = Object.entries(result).filter(([k, v]) => v).filter(([k, v]) => v && !((userData.progress[subject]??[]).includes(k))).map(([k, v]) => k);
     if(toAdd.length > 0) {
         if(!(subject in userData.progress)) {
             userData.progress[subject] = [];
