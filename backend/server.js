@@ -5,9 +5,6 @@ import express from 'express';
 
 let app = express();
 
-const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
-// const filterObject = (object, func) => Object.fromEntries(Object.entries(object).filter(([k, v]) => func(k, v)));
-
 const hash = (password, salt) => crypto.scryptSync(password, salt, 32);
 
 const generateSaltedHash = (password) => {
@@ -110,22 +107,26 @@ app.post('/api/createuser', express.json(), async (req, resp) => {
 });
 
 app.post('/api/submitanswers', express.json(), getUserMiddleware, async (req, resp) => {
-    const { body: {answers, subject}, userData } = req;
+    const { body: {answers={}, subject}, userData } = req;
 
-    const subjectAnswers = await loadJSON('backend/data/subjects/' + subject + '/answers.json');
+    const subjectAnswers = await loadJSON('backend/data/subjects/' + path.normalize(subject) + '/answers.json');
 
-    const result = mapObject(answers, (k, v) => (subjectAnswers[k]===v));
+    const isCorrect = ([questionId, answerIndex]) => (subjectAnswers[questionId]|0)===(answerIndex|0);
 
-    const toAdd = Object.entries(result).filter(([k, v]) => v && !((userData.progress[subject]??[]).includes(k))).map(([k, v]) => k);
-    if(toAdd.length > 0) {
+    const correctAnswers = Object.entries(answers).filter(isCorrect).map(([questionId, answerIndex]) => questionId);
+
+    const userAlreadyCompletedQuestion = (questionId) => !((userData.progress[subject]??[]).includes(questionId));
+
+    const newlyCorrectAnswers = correctAnswers.filter(userAlreadyCompletedQuestion);
+    if(newlyCorrectAnswers.length > 0) {
         let modifiedUserData = userData;
         if(!(subject in modifiedUserData.progress)) {
             modifiedUserData.progress[subject] = [];
         }
-        modifiedUserData.progress[subject].push(...toAdd);
+        modifiedUserData.progress[subject].push(...newlyCorrectAnswers);
         saveUser(modifiedUserData);
     }
-    resp.status(200).json(result);
+    resp.status(200).json(correctAnswers);
 });
 
 app.post('/api/answeredquestions', express.json(), getUserMiddleware, async (req, resp) => {

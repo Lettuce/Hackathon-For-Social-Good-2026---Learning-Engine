@@ -3,7 +3,7 @@ let subjectName = "";
 document.addEventListener("DOMContentLoaded", async () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  subjectName = urlParams.get("name") || "";
+  subjectName = urlParams.get("name") ?? "";
 
   let subjectTitle = subjectName
     .split(" ")
@@ -14,8 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   const questions = await getQuestions(subjectName);
   renderQuestions(questions);
-  const choices = await getChoices(subjectName);
-  renderChoices(choices);
+  renderChoices(questions);
 
   const form = document.getElementById("form");
   form.addEventListener("submit", (event) => {
@@ -55,9 +54,6 @@ function getQuestions(subjectName) {
       }
       return response.json();
     })
-    .then((data) => {
-      return Array.isArray(data) ? data : data.questions;
-    })
     .catch((error) => {
       console.error("Could not fetch questions:", error);
       return [];
@@ -65,58 +61,40 @@ function getQuestions(subjectName) {
 }
 
 function renderQuestions(questions) {
-  if (questions) {
-    const easyElement = document.getElementById("easy");
-    const mediumElement = document.getElementById("medium");
-    const hardElement = document.getElementById("hard");
+  if (!questions) return;
+  const easyElement = document.getElementById("easy");
+  const mediumElement = document.getElementById("medium");
+  const hardElement = document.getElementById("hard");
 
-    if (!easyElement) {
-      console.error("Target element #eazy not found in DOM");
-      return;
-    }
-
-    if (!mediumElement) {
-      console.error("Target element #medium not found in DOM");
-      return;
-    }
-
-    if (!hardElement) {
-      console.error("Target element #hard not found in DOM");
-      return;
-    }
-
-    questions.forEach((questionObj) => {
-      const pTag = document.createElement("p");
-      // Access the string property inside the object
-      pTag.textContent = questionObj.question;
-
-      // Route to the correct container based on the difficulty property
-      if (questionObj.difficulty === "easy") {
-        easyElement.appendChild(pTag);
-      } else if (questionObj.difficulty === "medium") {
-        mediumElement.appendChild(pTag);
-      } else if (questionObj.difficulty === "hard") {
-        hardElement.appendChild(pTag);
-      }
-    });
+  if (!easyElement) {
+    console.error("Target element #eazy not found in DOM");
+    return;
   }
-}
 
-function getChoices(subjectName) {
-  return fetch(`/data/subjects/${subjectName}/questions.json`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return Array.isArray(data) ? data : data.choices;
-    })
-    .catch((error) => {
-      console.error("Could not fetch questions:", error);
-      return [];
-    });
+  if (!mediumElement) {
+    console.error("Target element #medium not found in DOM");
+    return;
+  }
+
+  if (!hardElement) {
+    console.error("Target element #hard not found in DOM");
+    return;
+  }
+
+  questions.forEach((questionObj) => {
+    const pTag = document.createElement("p");
+    // Access the string property inside the object
+    pTag.textContent = questionObj.question;
+
+    // Route to the correct container based on the difficulty property
+    if (questionObj.difficulty === "easy") {
+      easyElement.appendChild(pTag);
+    } else if (questionObj.difficulty === "medium") {
+      mediumElement.appendChild(pTag);
+    } else if (questionObj.difficulty === "hard") {
+      hardElement.appendChild(pTag);
+    }
+  });
 }
 
 function renderChoices(choices) {
@@ -175,41 +153,23 @@ function renderChoices(choices) {
   });
 }
 
-async function formSubmission(event)
-{
-    const answers = getAnswers(event.target);
-    console.log(answers);
+async function formSubmission(event) {
+  const answers = getAnswers(event.target);
 
-    const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
-    const processedAnswers = mapObject(answers, (k, v) => v|0);
-    let feedback = await API.submitAnswers(subjectName, processedAnswers);
+  // const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
+  // const processedAnswers = mapObject(answers, (k, v) => v);
+  const correctQuestions = await API.submitAnswers(subjectName, answers);
 
-    feedback = Object.entries(feedback).map(([k, v]) => v);
-    feedback = feedback.filter((i) => i);
-    const trueAnswers = feedback.length;
+  const result = document.createElement("div");
+  const resultText = document.createElement("p");
   
-    console.log(trueAnswers);
-
-    const result = document.createElement("div");
-    const resultText = document.createElement("p");
-    
-    resultText.textContent = `You got ${trueAnswers} correct out of 6`;
-    result.appendChild(resultText);
-    const body = document.getElementById("body");
-    body.appendChild(result);
+  resultText.textContent = `You got ${correctQuestions.length} correct out of 6`;
+  result.appendChild(resultText);
+  const body = document.getElementById("body");
+  body.appendChild(result);
 }
 
 function getAnswers(formElement) {
   const formData = new FormData(formElement);
   return Object.fromEntries(formData.entries());
-
-  let data = {};
-
-  for (let [key, value] of formData.entries()) {
-    // value is returned as a string from FormData, 
-    // convert to Number if your API expects integers
-    data[key] = parseInt(value, 10);
-  }
-
-  return data;
 }

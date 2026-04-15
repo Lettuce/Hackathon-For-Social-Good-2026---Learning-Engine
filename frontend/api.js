@@ -15,7 +15,7 @@ class Auth {
 
 
 class API {
-    static sendRequest = async (endpoint, data, auth) => {
+    static sendRequest = async (endpoint, data, auth=false) => {
         try {
             const response = await fetch(endpoint, {
                 method: 'POST',
@@ -49,12 +49,12 @@ class API {
     static loggedIn = () => !(this.currentAuth()===null);
 
     // returns true if the user's credentials are correct, false otherwise (btw it returns false even on errors, which is how it works)
-    static verifyAuth = async (userAuth) => this.sendRequest('/api/vaildateauthentication', {auth: userAuth}, false) ?? false;
+    static verifyAuth = async (userAuth) => this.sendRequest('/api/vaildateauthentication', {auth: userAuth}) ?? false;
 
     // returns an array of answered questionIds
     static getAnsweredQuestions = async (subject) => this.sendRequest('/api/answeredquestions', { subject: subject }, true);
 
-    // return the answers object, but with the answer indices replaced with if the answer was correct or not
+    // returns an array of the questionIds that were correct
     static submitAnswers = async (subject, answers) => this.sendRequest('/api/submitanswers', { subject: subject, answers: answers }, true);
 
     // returns true if the user's credentials are correct, false otherwise (even on errors)
@@ -65,4 +65,7 @@ class API {
         userAuth.save();
         return true;
     };
+
+    // returns an array of completed subjects
+    static getCompletedSubjects = async () => this.sendRequest('/api/completedsubjects', {}, true);
 };

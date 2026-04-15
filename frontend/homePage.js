@@ -6,9 +6,6 @@ function getSubjects() {
       }
       return response.json();
     })
-    .then((data) => {
-      return data.subject.map((item) => item);
-    })
     .catch((error) => {
       console.error("Could not fetch subjects:", error);
       return null;
@@ -16,21 +13,22 @@ function getSubjects() {
 }
 
 if (!API.loggedIn()) {
- window.location.href = "login.html";
+  window.location.href = "login.html";
 }
- 
+
 // Execute the function and handle the resulting promise
 getSubjects().then((subjectsData) => {
-  if (subjectsData) {
-    console.log("Fetched Subjects Data:", subjectsData);
-    const subjectsElement = document.getElementById("subjects");
+  if (!subjectsData) return;
+  
+  console.log("Fetched Subjects Data:", subjectsData);
+  const subjectsElement = document.getElementById("subjects");
 
-    if (!subjectsElement) {
-      console.error("Target element #subjects not found in DOM");
-      return;
-    }
+  if (!subjectsElement) {
+    console.error("Target element #subjects not found in DOM");
+    return;
+  }
 
-    subjectsData.forEach((subject) => {
+  subjectsData.forEach((subject) => {
     const pElement = document.createElement("p");
     const aElement = document.createElement("a");
     const fieldsetElement = document.createElement("fieldset");
@@ -48,6 +46,5 @@ getSubjects().then((subjectsData) => {
     pElement.appendChild(aElement);
     fieldsetElement.appendChild(pElement);
     subjectsElement.appendChild(fieldsetElement);
-    });
-  }
+  });
 });
