@@ -52,46 +52,51 @@ const saveUser = async (userdata) => await saveJSON(getUserFileName(userdata.aut
 const loadUser = async (username) => await loadJSON(getUserFileName(username));
 
 const serveFile = (resp, filepath) => {
-    filepath = path.normalize(decodeURIComponent(filepath));
-    resp.sendFile(filepath, {root: '.'}, (err) => {
-        console.log(`file served: [${filepath}]`);
+    const normalizedFilepath = path.normalize(decodeURIComponent(filepath));
+    resp.sendFile(normalizedFilepath, {root: '.'}, (err) => {
+        console.log(`file served: [${normalizedFilepath}]`);
         if(err) {
-            resp.status(404).send('404, file not found.');
+            resp.status(404).send('File couldn\'t be sent.');
         }
     });
 };
 
 const getUserMiddleware = async (req, resp, next) => {
     try {
-        const {username, password} = req.body.auth; 
+        const {auth: {username, password}} = req.body; 
         const userData = await loadUser(username);
         
-        if((userData ?? null) === null) throw 'Failed to load user data.';
+        if((userData ?? null) === null) throw {error: 'Failed to load user data.'};
 
         const authenticated = verifyPassword(password, userData.auth.password);
         
-        if(!authenticated) throw 'Failed to authenticate user.';
+        if(!authenticated) throw {error: 'Failed to authenticate user.'};
         req.userData = userData;
 
     } catch(err) {
-        resp.status(403).json({error: err});
+        resp.status(403).json(err);
         return;
     }
     next()
 };
 
-app.get(/\/data\/.*/, (req, resp) => serveFile(resp, 'backend' + path.normalize(req.path)));
+const routeDirectories = (...routes) => {
+    for(const [route, modifier = ((p)=>p)] of routes) {
+        app.get(route, (req, resp) => serveFile(resp, modifier(path.normalize(req.path))));
+    }
+};
 
-app.get('/', (req, resp) => serveFile(resp, 'frontend/index.html'));
-
-app.get(/\/.*/, (req, resp) => serveFile(resp, 'frontend' + path.normalize(req.path)));
+routeDirectories(
+    [/\/data\/.*/, (p) => 'backend' + p],
+    ['/',          (p) => 'frontend/index.html'],
+    [/\/.*/,       (p) => 'frontend' + p]
+);
 
 app.post('/api/createuser', express.json(), async (req, resp) => {
-    const {body} = req;
-    const {username, password} = body.auth;
+    const { username, password } = req.body.auth;
 
     if(userExists(username)) {
-        resp.status(409).json({success: false, error: 'User already exists.'});
+        resp.status(409).json({success: false, error: `User with name [${username}] already exists.`});
         return;
     }
     
@@ -105,48 +110,48 @@ app.post('/api/createuser', express.json(), async (req, resp) => {
 });
 
 app.post('/api/submitanswers', express.json(), getUserMiddleware, async (req, resp) => {
-    const { answers, subject, auth } = req.body;
-    let {userData} = req;
+    const { body: {answers, subject}, userData } = req;
 
     const subjectAnswers = await loadJSON('backend/data/subjects/' + subject + '/answers.json');
 
     const result = mapObject(answers, (k, v) => (subjectAnswers[k]===v));
 
-    const toAdd = Object.entries(result).filter(([k, v]) => v).filter(([k, v]) => v && !((userData.progress[subject]??[]).includes(k))).map(([k, v]) => k);
+    const toAdd = Object.entries(result).filter(([k, v]) => v && !((userData.progress[subject]??[]).includes(k))).map(([k, v]) => k);
     if(toAdd.length > 0) {
-        if(!(subject in userData.progress)) {
-            userData.progress[subject] = [];
+        let modifiedUserData = userData;
+        if(!(subject in modifiedUserData.progress)) {
+            modifiedUserData.progress[subject] = [];
         }
-        userData.progress[subject].push(...toAdd);
-        saveUser(userData);
+        modifiedUserData.progress[subject].push(...toAdd);
+        saveUser(modifiedUserData);
     }
     resp.status(200).json(result);
 });
 
 app.post('/api/answeredquestions', express.json(), getUserMiddleware, async (req, resp) => {
-    const { subject } = req.body;
-    const progress = req.userData.progress[subject] ?? []
-    resp.status(200).json(progress);
+    const { body: {subject}, userData: {progress} } = req;
+    resp.status(200).json(progress[subject] ?? []);
 });
 
-app.post('/api/vaildateauthentication', express.json(), getUserMiddleware, (req, resp) => resp.status(200).json({success: true}));
+app.post('/api/vaildateauthentication', express.json(), getUserMiddleware, (req, resp) => {
+    resp.status(200).json({success: true, message: 'Credentials are valid.'})
+});
 
-// app.post('/api/subjectcompletion', express.json(), authenticateMiddleware, (req, resp) => {
-//     const body = req.body;
-//     const user = loadUser(body.auth.username);
-//     const subjects = loadJSON('backend/data/subjects.json').subject;
-//     const isSubjectComplete = (subject) => {
-//         const userAnswers = user.progress[subject];
-//         console.log(userAnswers.length)
-//         if(userAnswers === undefined) return false;
-//         const subjectAnswers = loadJSON(`backend/data/subjects/${subject}/answers.json`);
-//         const mapped = Object.entries(subjectAnswers).map((answer) => userAnswers.includes(answer));
-//         console.log(mapped);
-//         return mapped.every((i)=>i);
-//     };
-//     const result = Object.fromEntries(subjects.map((subject) => [subject, isSubjectComplete(subject)]));
-//     respondWithJSON(resp, 200, result);
-// });
+app.post('/api/completedsubjects', express.json(), getUserMiddleware, async (req, resp) => {
+    const {userData: {progress={}}} = req;
+
+    const compareAnswersToFile = async ([subject, userAnswers]) => {
+        const fileAnswers = Object.keys(await loadJSON(`backend/data/subjects/${subject}/answers.json`)??{});
+        const isCompleted = fileAnswers.every((fileAnswer) => userAnswers.includes(fileAnswer));
+        return [subject, isCompleted];
+    };
+
+    const completion = await Promise.all(Object.entries(progress).map(compareAnswersToFile));
+
+    const completedSubjects = completion.filter(([subject, completed]) => completed).map(([subject, completed])=>subject);
+
+    resp.status(200).json(completedSubjects);
+});
 
 const PORT = 5500;
 app.listen(PORT);

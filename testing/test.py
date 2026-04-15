@@ -8,7 +8,8 @@ postAPI = lambda endpoint: requests.post('http://localhost:5500/api/' + endpoint
 
 # response = postAPI('answeredquestions')
 # response = postAPI('createuser')
-response = postAPI('submitanswers')
+# response = postAPI('submitanswers')
+response = postAPI('completedsubjects')
 
 print(response.status_code)
 print(response.text)
