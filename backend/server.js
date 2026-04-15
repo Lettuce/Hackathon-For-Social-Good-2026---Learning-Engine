@@ -1,10 +1,12 @@
 import crypto  from 'node:crypto'
 import fs      from 'node:fs';
-import mime    from 'mime/lite';
+import path    from 'node:path'
 import express from 'express';
 
+let app = express();
 
 const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
+// const filterObject = (object, func) => Object.fromEntries(Object.entries(object).filter(([k, v]) => func(k, v)));
 
 const hash = (password, salt) => crypto.scryptSync(password, salt, 32);
 
@@ -15,144 +17,130 @@ const generateSaltedHash = (password) => {
 
 const verifyPassword = (password, hashed) => hash(password, hashed.salt).toString("hex")===hashed.hash;
 
-let app = express();
-
-const loadJSON = (path) => {
-    return JSON.parse(fs.readFileSync(path, 'utf8'));
+const loadJSON = async (filepath) => {
+    let filehandle;
+    try {
+        filehandle = await fs.promises.open(filepath, 'r');
+        const data = await filehandle.readFile('utf8');
+        return JSON.parse(data);
+    } catch(err) {
+        return null;
+    } finally {
+        await filehandle?.close();
+    }
 };
 
-const saveJSON = (path, data) => {
-    fs.writeFileSync(path, JSON.stringify(data, null, 4), 'utf8');
+const saveJSON = async (filepath, data) => {
+    let filehandle;
+    try {
+        filehandle = await fs.promises.open(filepath, 'w');
+        await filehandle.writeFile(JSON.stringify(data, null, 4), 'utf8');
+        return true;
+    } catch(err) {
+        return false;
+    } finally {
+        await filehandle?.close();
+    }
 };
 
 const getUserFileName = (username) => {
-    return 'backend/userdata/' + username + '.json';
+    return 'backend/userdata/' + path.normalize(username) + '.json';
 }
 const userExists = (username) => {
     return fs.existsSync(getUserFileName(username));
 };
 
-class User {
-    constructor(auth, progress) {
-        this.auth = auth;
-        this.progress = progress;
-    }
-    save() {
-        saveJSON(getUserFileName(this.auth.username), this);
-    }
+const saveUser = async (userdata) => {
+    return saveJSON(getUserFileName(userdata.auth.username), userdata);
 };
 
-const authenticate = (providedAuth) => {
+const loadUser = async (username) => {
     try {
-        const userAuth = loadJSON(getUserFileName(providedAuth.username)).auth;
-        return verifyPassword(providedAuth.password, userAuth.password);
-    } catch(err) {
-        return false;
-    }
-};
-
-const loadUser = (username) => {
-    try {
-        const source = loadJSON(getUserFileName(username));
-        return new User(source.auth, source.progress);
+        return await loadJSON(getUserFileName(username));
     } catch(err) {
         return null;
     }
 };
 
-const respondWithJSON = (resp, statusCode, message) => {
-    resp.statusCode = statusCode;
-    resp.setHeader('Content-Type', 'application/json');
-    resp.end(JSON.stringify(message));
+const serveFile = (resp, filepath) => {
+    filepath = path.normalize(decodeURIComponent(filepath));
+    resp.sendFile(filepath, {root: '.'}, (err) => {
+        console.log(`file served: [${filepath}]`);
+        if(err) {
+            resp.status(404).send('404, file not found.');
+        }
+    });
 };
 
-const serveFile = (resp, path) => {
-    path = decodeURIComponent(path);
-    console.log(`file served: [${path}]`);
-
-    let mimeType = undefined;
-    let data = undefined;
+const getUserMiddleware = async (req, resp, next) => {
     try {
-        mimeType = mime.getType(path);
-        data = fs.readFileSync(path, 'utf8');
-    } catch (err) {}
-    if(data === undefined) {
-        resp.statusCode = 404;
-        resp.setHeader('Content-Type', 'text/plain');
-        resp.end('404, file not found!');
-        return;
-    }
+        const {username, password} = req.body.auth; 
+        const userData = await loadUser(username);
+        
+        if((userData ?? null) === null) throw 'Failed to load user data.';
 
-    resp.statusCode = 200;
-    resp.setHeader('Content-Type', mimeType);
-    resp.end(data);
-};
+        const authenticated = verifyPassword(password, userData.auth.password);
+        
+        if(!authenticated) throw 'Failed to authenticate user.';
+        req.userData = userData;
 
-const createUser = (auth) => {
-    if(userExists(auth.username)) {
-        return false;
-    }
-    
-    const user = new User({username: auth.username, password: generateSaltedHash(auth.password)}, {});
-    user.save();
-    return true;
-};
-
-const authenticateMiddleware = (req, resp, next) => {
-    if(!authenticate(req.body.auth)) {
-        respondWithJSON(resp, 403, {success: false});
+    } catch(err) {
+        resp.status(403).json({error: err});
         return;
     }
     next()
 };
 
-app.get(/\/data\/.*/, (req, resp) => serveFile(resp, 'backend' + req.path));
+app.get(/\/data\/.*/, (req, resp) => serveFile(resp, 'backend' + path.normalize(req.path)));
 
 app.get('/', (req, resp) => serveFile(resp, 'frontend/index.html'));
 
-app.get(/\/.*/, (req, resp) => serveFile(resp, 'frontend' + req.path));
+app.get(/\/.*/, (req, resp) => serveFile(resp, 'frontend' + path.normalize(req.path)));
 
-app.post('/api/createuser', express.json(), (req, resp) => {
-    const body = req.body;
-    const success = createUser(body.auth);
-    respondWithJSON(resp, success?201:409, {success: success});
-});
+app.post('/api/createuser', express.json(), async (req, resp) => {
+    const {body} = req;
+    const {username, password} = body.auth;
 
-// const debugMiddleware = (req, resp, next) => {
-//     console.log(req.body);
-//     next();
-// };
-
-app.post('/api/submitanswers', express.json(), authenticateMiddleware, (req, resp) => {
-    const body = req.body;
-    let user = loadUser(body.auth.username);
-    const answers = body.answers;
-    const subject = body.subject;
-    const subjectAnswers = new Map(Object.entries(loadJSON('backend/data/subjects/' + subject + '/answers.json')));
-
-    const isCorrect = (k, v) => (subjectAnswers.get(k)===v);
-
-    const result = mapObject(answers, isCorrect);
-
-    if(!(subject in user.progress)) {
-        user.progress[subject] = [];
+    if(userExists(username)) {
+        resp.status(409).json({success: false, error: 'User already exists.'});
+        return;
     }
-
-    const toAdd = Object.entries(result).filter(([k, v]) => v).filter(([k, v]) => !(user.progress[subject].includes(k))).map(([k, v]) => k);
     
-    user.progress[subject].push(...toAdd);
-    user.save();
-    respondWithJSON(resp, 200, result);
+    const success = await saveUser({auth: {username: username, password: generateSaltedHash(password)}, progress: {}});
+    if(!success) {
+        resp.status(500).json({success: false, error: 'Failed to save user data.'});
+        return;
+    }
+    
+    resp.status(201).json({success: true, message: 'User account created successfully.'});
 });
 
-app.post('/api/answeredquestions', express.json(), authenticateMiddleware, (req, resp) => {
-    const body = req.body;
-    const subject = body.subject;
-    let user = loadUser(body.auth.username);
-    respondWithJSON(resp, 200, user.progress[subject]);
+app.post('/api/submitanswers', express.json(), getUserMiddleware, async (req, resp) => {
+    const { answers, subject, auth } = req.body;
+    let {userData} = req;
+
+    const subjectAnswers = await loadJSON('backend/data/subjects/' + subject + '/answers.json');
+
+    const result = mapObject(answers, (k, v) => (subjectAnswers[k]===v));
+
+    const toAdd = Object.entries(result).filter(([k, v]) => v).filter(([k, v]) => v && !(userData.progress[subject].includes(k))).map(([k, v]) => k);
+    if(toAdd.length > 0) {
+        if(!(subject in userData.progress)) {
+            userData.progress[subject] = [];
+        }
+        userData.progress[subject].push(...toAdd);
+        saveUser(userData);
+    }
+    resp.status(200).json(result);
 });
 
-app.post('/api/vaildateauthentication', express.json(), authenticateMiddleware, (req, resp) => respondWithJSON(resp, 200, {success: true}));
+app.post('/api/answeredquestions', express.json(), getUserMiddleware, async (req, resp) => {
+    const { subject } = req.body;
+    const progress = req.userData.progress[subject] ?? []
+    resp.status(200).json(progress);
+});
+
+app.post('/api/vaildateauthentication', express.json(), getUserMiddleware, (req, resp) => resp.status(200).json({success: true}));
 
 // app.post('/api/subjectcompletion', express.json(), authenticateMiddleware, (req, resp) => {
 //     const body = req.body;

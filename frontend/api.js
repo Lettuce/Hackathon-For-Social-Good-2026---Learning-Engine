@@ -5,18 +5,12 @@ class Auth {
     }
     static load = () => {
         const retrieved = sessionStorage.getItem('user_auth');
-        if(!retrieved) {
-            return null;
-        }
-        const parsed = JSON.parse(retrieved);
-        return new Auth(parsed.username, parsed.password);
+        if(!retrieved) return null;
+        const {username, password} = JSON.parse(retrieved);
+        return new Auth(username, password);
     }
-    save = () => {
-        sessionStorage.setItem('user_auth', JSON.stringify(this));
-    }
-    static remove = () => {
-        sessionStorage.removeItem('user_auth');
-    }
+    save = () => sessionStorage.setItem('user_auth', JSON.stringify(this));
+    static remove = () => sessionStorage.removeItem('user_auth');
 };
 
 
@@ -27,7 +21,7 @@ class API {
                 method: 'POST',
                 body: JSON.stringify(auth ? {auth: Auth.load(), ...data} : data),
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 }
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,12 +30,12 @@ class API {
             return null;
         }
     };
+    
     // set current user's authentication details
     static login = async (username, password) => {
-        const auth = new Auth(username, password);
-        const result = await this.verifyAuth(auth);
-        if((result==null) || (result==false) || (result==undefined)) return false;
-        auth.save();
+        const userAuth = new Auth(username, password);
+        if(!await this.verifyAuth(userAuth)) return false;
+        userAuth.save();
         return true;
     };
     
@@ -66,17 +60,9 @@ class API {
     // returns true if the user's credentials are correct, false otherwise (even on errors)
     static createUser = async (username, password) => {
         const userAuth = new Auth(username, password);
-        const result = await this.sendRequest('/api/createuser', {auth: userAuth}, false);
-        if((result==null) || (result==false) || (result==undefined)) return false;
-        const success = result.success;
+        const success = (await this.sendRequest('/api/createuser', {auth: userAuth}, false))?.success ?? false;
         if(!success) return false;
         userAuth.save();
         return true;
     };
 };
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//     console.log(API.login("testuser", "testpassword"));
-//     const res = await API.submitAnswers(Auth.load(), 'astronomy', {"planet-q4": 2, "atomic-q3": 3});
-//     console.log(res);
-// });
