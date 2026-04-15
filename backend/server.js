@@ -48,14 +48,19 @@ const saveUser = async (userdata) => await saveJSON(getUserFileName(userdata.aut
 
 const loadUser = async (username) => await loadJSON(getUserFileName(username));
 
-const serveFile = (resp, filepath) => {
-    const normalizedFilepath = path.normalize(decodeURIComponent(filepath));
-    resp.sendFile(normalizedFilepath, {root: '.'}, (err) => {
-        console.log(`file served: [${normalizedFilepath}]`);
+const serveFile = (resp, rootpath, filepath) => {
+    const onError = (err) => {
+        console.log(`file served: [${filepath}]`);
         if(err) {
             resp.status(404).send('File couldn\'t be sent.');
         }
-    });
+    };
+
+    if((filepath??null) === null) {
+        onError(true);
+        return;
+    }
+    resp.sendFile(filepath, {root: rootpath}, onError);
 };
 
 const getUserMiddleware = async (req, resp, next) => {
@@ -74,36 +79,36 @@ const getUserMiddleware = async (req, resp, next) => {
         resp.status(403).json(err);
         return;
     }
-    next()
+    next();
 };
 
 const routeDirectories = (...routes) => {
-    for(const [route, modifier = ((p)=>p)] of routes) {
-        app.get(route, (req, resp) => serveFile(resp, modifier(path.normalize(req.path))));
+    for(const [route, rootpath, modifier = ((p)=>p)] of routes) {
+        app.get(route, (req, resp) => serveFile(resp, rootpath, modifier(decodeURIComponent(req.path))));
     }
 };
 
 routeDirectories(
-    [/\/data\/.*/, (p) => 'backend' + p],
-    ['/',          (p) => 'frontend/index.html'],
-    [/\/.*/,       (p) => 'frontend' + p]
+    [/\/data\/.*/, './backend'],
+    ['/',          './frontend', (p) => 'index.html'],
+    [/\/.*/,       './frontend']
 );
 
 app.post('/api/createuser', express.json(), async (req, resp) => {
     const { username, password } = req.body.auth;
 
     if(userExists(username)) {
-        resp.status(409).json({success: false, error: `User with name [${username}] already exists.`});
+        resp.status(409).json({error: `User with name [${username}] already exists.`});
         return;
     }
     
     const success = await saveUser({auth: {username: username, password: generateSaltedHash(password)}, progress: {}});
     if(!success) {
-        resp.status(500).json({success: false, error: 'Failed to save user data.'});
+        resp.status(500).json({error: 'Failed to save user data.'});
         return;
     }
     
-    resp.status(201).json({success: true, message: 'User account created successfully.'});
+    resp.status(201).json(true);
 });
 
 app.post('/api/submitanswers', express.json(), getUserMiddleware, async (req, resp) => {
@@ -135,7 +140,7 @@ app.post('/api/answeredquestions', express.json(), getUserMiddleware, async (req
 });
 
 app.post('/api/vaildateauthentication', express.json(), getUserMiddleware, (req, resp) => {
-    resp.status(200).json({success: true, message: 'Credentials are valid.'})
+    resp.status(200).json(true)
 });
 
 app.post('/api/completedsubjects', express.json(), getUserMiddleware, async (req, resp) => {

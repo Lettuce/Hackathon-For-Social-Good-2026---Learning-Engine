@@ -49,7 +49,7 @@ class API {
     static loggedIn = () => !(this.currentAuth()===null);
 
     // returns true if the user's credentials are correct, false otherwise (btw it returns false even on errors, which is how it works)
-    static verifyAuth = async (userAuth) => this.sendRequest('/api/vaildateauthentication', {auth: userAuth}) ?? false;
+    static verifyAuth = async (userAuth) => (await this.sendRequest('/api/vaildateauthentication', {auth: userAuth})) ?? false;
 
     // returns an array of answered questionIds
     static getAnsweredQuestions = async (subject) => this.sendRequest('/api/answeredquestions', { subject: subject }, true);
@@ -60,7 +60,7 @@ class API {
     // returns true if the user's credentials are correct, false otherwise (even on errors)
     static createUser = async (username, password) => {
         const userAuth = new Auth(username, password);
-        const success = (await this.sendRequest('/api/createuser', {auth: userAuth}, false))?.success ?? false;
+        const success = (await this.sendRequest('/api/createuser', {auth: userAuth})) ?? false;
         if(!success) return false;
         userAuth.save();
         return true;
