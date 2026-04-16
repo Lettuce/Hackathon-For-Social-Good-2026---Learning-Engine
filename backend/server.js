@@ -15,11 +15,11 @@ const generateSaltedHash = (password) => {
 const verifyPassword = (password, hashed) => hash(password, hashed.salt).toString("hex")===hashed.hash;
 
 const loadJSON = async (filepath) => {
-    let filehandle;
+    let filehandle = undefined;
     try {
         filehandle = await fs.promises.open(filepath, 'r');
-        const data = await filehandle.readFile('utf8');
-        return JSON.parse(data);
+        const data = await filehandle?.readFile('utf8');
+        return JSON.parse(data) ?? null;
     } catch(err) {
         return null;
     } finally {
@@ -28,10 +28,10 @@ const loadJSON = async (filepath) => {
 };
 
 const saveJSON = async (filepath, data) => {
-    let filehandle;
+    let filehandle = undefined;
     try {
         filehandle = await fs.promises.open(filepath, 'w');
-        await filehandle.writeFile(JSON.stringify(data, null, 4), 'utf8');
+        await filehandle?.writeFile(JSON.stringify(data, null, 4), 'utf8');
         return true;
     } catch(err) {
         return false;
@@ -49,36 +49,31 @@ const saveUser = async (userdata) => await saveJSON(getUserFileName(userdata.aut
 const loadUser = async (username) => await loadJSON(getUserFileName(username));
 
 const serveFile = (resp, rootpath, filepath) => {
-    const onError = (err) => {
-        console.log(`file served: [${filepath}]`);
-        if(err) {
-            resp.status(404).send('File couldn\'t be sent.');
-        }
-    };
+    console.log(`serving file: [${filepath}]`);
 
-    if((filepath??null) === null) {
-        onError(true);
-        return;
-    }
-    resp.sendFile(filepath, {root: rootpath}, onError);
+    const onError = () => resp.status(404).json('File couldn\'t be sent.');
+
+    if(!filepath) return onError();
+
+    resp.sendFile(filepath, {root: rootpath}, (err) => err ? onError() : undefined);
 };
 
 const getUserMiddleware = async (req, resp, next) => {
-    try {
-        const {auth: {username, password}} = req.body; 
-        const userData = await loadUser(username);
-        
-        if((userData ?? null) === null) throw {error: 'Failed to load user data.'};
-
-        const authenticated = verifyPassword(password, userData.auth.password);
-        
-        if(!authenticated) throw {error: 'Failed to authenticate user.'};
-        req.userData = userData;
-
-    } catch(err) {
-        resp.status(403).json(err);
-        return;
+    const { auth: {username, password} } = req.body; 
+    const userData = await loadUser(username);
+    
+    if(!userData) {
+        return resp.status(403).json({error: 'Failed to load user data.'});
     }
+
+    const authenticated = verifyPassword(password, userData.auth.password);
+    
+    if(!authenticated) {
+        return resp.status(403).json({error: 'Failed to authenticate user.'});
+    }
+
+    req.userData = userData;
+
     next();
 };
 
@@ -98,14 +93,12 @@ app.post('/api/createuser', express.json(), async (req, resp) => {
     const { username, password } = req.body.auth;
 
     if(userExists(username)) {
-        resp.status(409).json({error: `User with name [${username}] already exists.`});
-        return;
+        return resp.status(409).json({error: `User with name [${username}] already exists.`});
     }
     
     const success = await saveUser({auth: {username: username, password: generateSaltedHash(password)}, progress: {}});
     if(!success) {
-        resp.status(500).json({error: 'Failed to save user data.'});
-        return;
+        return resp.status(500).json({error: 'Failed to save user data.'});
     }
     
     resp.status(201).json(true);
@@ -140,15 +133,15 @@ app.post('/api/answeredquestions', express.json(), getUserMiddleware, async (req
 });
 
 app.post('/api/vaildateauthentication', express.json(), getUserMiddleware, (req, resp) => {
-    resp.status(200).json(true)
+    resp.status(200).json(true);
 });
 
 app.post('/api/completedsubjects', express.json(), getUserMiddleware, async (req, resp) => {
-    const {userData: {progress={}}} = req;
+    const { userData: {progress={}} } = req;
 
     const compareAnswersToFile = async ([subject, userAnswers]) => {
-        const fileAnswers = Object.keys(await loadJSON(`backend/data/subjects/${subject}/answers.json`)??{});
-        const isCompleted = fileAnswers.every((fileAnswer) => userAnswers.includes(fileAnswer));
+        const fileAnswers = await loadJSON(`backend/data/subjects/${subject}/answers.json`)??{};
+        const isCompleted = Object.keys(fileAnswers).every((fileAnswer) => userAnswers.includes(fileAnswer));
         return [subject, isCompleted];
     };
 
