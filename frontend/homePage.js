@@ -1,3 +1,9 @@
+
+function logoutButton() {
+  API.logout();
+  window.location.href = "login.html";
+}
+
 function getSubjects() {
   return fetch("/data/subjects.json")
     .then((response) => {
