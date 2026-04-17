@@ -3,11 +3,19 @@ import {User} from './User.js';
 import path from 'node:path';
 import fs   from 'node:fs';
 
-// requires that the handler is async
-const safeFileHandling = async (filepath, flags, handler) => {
+const safeFilepath = (root, filepath) => {
+    const fullpath = path.resolve(root, filepath);
+    return fullpath.startsWith(root) ? fullpath : null;
+};
+
+// requires that the handler is async or returns a promise
+const safeFileHandling = async (root, filepath, flags, handler) => {
+    const fullpath = safeFilepath(root, filepath);
+    if(!fullpath) return null;
+    
     let filehandle = undefined;
     try {
-        filehandle = await fs.promises.open(filepath, flags);
+        filehandle = await fs.promises.open(fullpath, flags);
         if(!filehandle) return null;
         return handler(filehandle);
     } catch(err) {
@@ -18,37 +26,37 @@ const safeFileHandling = async (filepath, flags, handler) => {
 };
 
 // returns an object on success, otherwise null
-const loadJSON = async (filepath) => await safeFileHandling(filepath, 'r', async (filehandle) => {
+const loadJSON = async (root, filepath) => await safeFileHandling(root, filepath, 'r', async (filehandle) => {
     return JSON.parse(await filehandle.readFile('utf8'));
 });
 
 // returns true on success, otherwise null
-const saveJSON = async (filepath, data) => await safeFileHandling(filepath, 'w', async (filehandle) => {
+const saveJSON = async (root, filepath, data) => await safeFileHandling(root, filepath, 'w', async (filehandle) => {
     await filehandle.writeFile(JSON.stringify(data, null, 4), 'utf8');
     return true;
 });
 
 export class Database {
-    #userDatabaseDirectory;
-    #subjectDatabaseDirectory;
-    constructor({userDatabaseDirectory, subjectDatabaseDirectory}) {
-        this.#userDatabaseDirectory = userDatabaseDirectory;
-        this.#subjectDatabaseDirectory = subjectDatabaseDirectory;
+    #userDatabase;
+    #subjectDatabase;
+    constructor({userDatabase, subjectDatabase}) {
+        this.#userDatabase = path.resolve(userDatabase);
+        this.#subjectDatabase = path.resolve(subjectDatabase);
     };
     
     #getUserFileName(username) {
-        return `${this.#userDatabaseDirectory}${path.normalize(username)}.json`;
+        return `${username}.json`;
     };
 
     async saveUser(user) {
-        return await saveJSON(this.#getUserFileName(user.username), user.saveableData());
+        return await saveJSON(this.#userDatabase, this.#getUserFileName(user.username), user.saveableData());
     };
     async loadUser({username}) {
-        const loaded = await loadJSON(this.#getUserFileName(username));
+        const loaded = await loadJSON(this.#userDatabase, this.#getUserFileName(username));
         return (loaded!=null) ? new User({username, ...loaded}) : null;
     };
     userExists({username}) {
-        return fs.existsSync(this.#getUserFileName(username));
+        return fs.existsSync(safeFilepath(this.#userDatabase, this.#getUserFileName(username)));
     };
     async createUser(requestAuth) {
         if(this.userExists(requestAuth)) return null;
@@ -56,7 +64,7 @@ export class Database {
         return (await this.saveUser(user)) ? user : null;
     };
     async loadSubjectAnswers(subject) {
-        return await loadJSON(`${this.#subjectDatabaseDirectory}${path.normalize(subject)}/answers.json`);
+        return await loadJSON(this.#subjectDatabase, `${path.normalize(subject)}/answers.json`);
     };
     
     // middleware function for express.js, arrow function is required here instead of a method
@@ -81,7 +89,3 @@ export class Database {
     };
 };
 
-// const userDatabaseDirectory = 'backend/userdata/';
-
-
-// export default {Database, User, loadJSON, saveJSON};

@@ -16,10 +16,11 @@ export class User {
         return new User({username: requestAuth.username, auth: StoredAuth.generate(requestAuth), progress: {}});
     };
     updateProgress(subject, solvedQuestionIds) {
-        const oldProgressSize = solvedQuestionIds.length;
-        if(oldProgressSize == 0) return 0;
+        if(solvedQuestionIds.length == 0) return 0;
+        const currentProgress = this.progress[subject] ?? [];
+        const oldProgressSize = currentProgress.length;
         const newProgress = new Set(solvedQuestionIds);
-        const progressSet = new Set(this.progress[subject]??[]);
+        const progressSet = new Set(currentProgress);
         this.progress[subject] = [...progressSet.union(newProgress)];
         return this.progress[subject].length - oldProgressSize;
     };

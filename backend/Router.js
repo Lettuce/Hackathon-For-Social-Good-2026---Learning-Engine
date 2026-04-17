@@ -9,10 +9,8 @@ const serveFile = (resp, rootpath, filepath) => {
     resp.sendFile(filepath, {root: rootpath}, (err) => err ? onError() : undefined);
 };
 
-const routeDirectories = (app) => (...routes) => {
+export const FileRouter = (app, ...routes) => {
     for(const [route, rootpath, modifier = ((p)=>p)] of routes) {
         app.get(route, (req, resp) => serveFile(resp, rootpath, modifier(decodeURIComponent(req.path))));
     }
 };
-
-export default { routeDirectories };
