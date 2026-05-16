@@ -17,11 +17,9 @@ export class User {
     };
     updateProgress(subject, solvedQuestionIds) {
         if(solvedQuestionIds.length == 0) return 0;
-        const currentProgress = this.progress[subject] ?? [];
-        const oldProgressSize = currentProgress.length;
-        const newProgress = new Set(solvedQuestionIds);
-        const progressSet = new Set(currentProgress);
-        this.progress[subject] = [...progressSet.union(newProgress)];
-        return this.progress[subject].length - oldProgressSize;
+        const oldProgress = this.progress[subject] ?? [];
+        const newProgress = [...new Set([...solvedQuestionIds, ...oldProgress])];
+        this.progress[subject] = newProgress;
+        return this.progress[subject].length - oldProgress.length;
     };
 };
