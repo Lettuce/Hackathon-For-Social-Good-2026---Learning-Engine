@@ -29,14 +29,15 @@ async function formSubmission(event)
   body.appendChild(result);
   
   // Get all questions and resources
-  let allQuestions = getQuestions(subjectName);
-  let allResources = getResources(subjectName);
+  let allQuestions = await getQuestions(subjectName);
+  let allResources = await getResources(subjectName);
 
   // Use the answer key objects to get the questionIds
-  let questionResources = allQuestions.map((question) => ({questionID: question.id, resource: allResources.filter((resource) => resource.id == question.resourceId)})[0]);
+  console.log(allQuestions);
+  let questionResources = allQuestions.map((question) => allResources.filter((resource) => resource.id == question.resourceId)[0]);
 
   // Use a forEach loop to display the resources (Note: the p element's IDs are the same as the resourceIds they correspond to)
-  questionResources.forEach(({questionID, resource}) =>
+  questionResources.forEach((resource) =>
   {
         let resourceURL = resource.url;
         document.getElementById(resource.id).innerHTML = "To learn more about where this information was found, click on the following link: " + resourceURL;
