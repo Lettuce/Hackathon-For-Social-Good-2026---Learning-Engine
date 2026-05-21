@@ -90,10 +90,6 @@ function renderChoices(choices) {
     questionTitle.textContent = question;
     questionGroup.appendChild(questionTitle);
 
-    const answerResult = document.createElement("p");
-    answerResult.id = resourceId;
-    questionGroup.appendChild(answerResult);
-    
     const questionId = questionObj.id;
 
     choicesArray.forEach((choice, cIndex) => {
@@ -114,6 +110,10 @@ function renderChoices(choices) {
       choiceWrapper.append(inputElement, label);
       questionGroup.appendChild(choiceWrapper);
     });
+
+    const answerResult = document.createElement("p");
+    answerResult.id = resourceId;
+    questionGroup.appendChild(answerResult);
 
     parentContainer.appendChild(questionGroup);
   });
