@@ -10,8 +10,12 @@ export class ServerAPI {
         for(const [endpointName, handler] of Object.entries(this)) {
             if(endpointName.endsWith(MIDDLEWARE_SUFFIX)) continue;
             this.#app.post(`/api/${endpointName}`, express.json(), ...(this[`${endpointName}${MIDDLEWARE_SUFFIX}`] ?? []), async (req, resp) => {
-                const {status, json} = await handler(req);
-                resp.status(status).json(json);
+                try {
+                    const {status, json} = await handler(req);
+                    resp.status(status).json(json);
+                } catch (err) {
+                    resp.status(500).json('Internal server error!');
+                }
             });
         }
     };
