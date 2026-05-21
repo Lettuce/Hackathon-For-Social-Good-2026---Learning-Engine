@@ -1,5 +1,20 @@
 "use strict";
 
+// Get the subject Name
+
+let subjectName = "";
+
+document.addEventListener("DOMContentLoaded", async () => {
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+subjectName = urlParams.get("name") ?? "";
+
+let subjectTitle = subjectName
+.split(" ")
+.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+.join(" ");
+});
+
 async function formSubmission(event) 
 {
   const answers = getAnswers(event.target);
@@ -15,6 +30,20 @@ async function formSubmission(event)
   result.appendChild(resultText);
   const body = document.getElementById("body");
   body.appendChild(result);
+  
+  // Get all questions and resources
+  let allQuestions = getQuestions(subjectName);
+  let allResources = getResources(subjectName);
+
+  // Use the answer key objects to get the questionIds
+  let questionResources = allQuestions.map((question) => ({questionID: question.id, resource: allResources.filter((resource) => resource.id == question.resourceId})[0]);
+
+  // Use a forEach loop to display the resources (Note: the p element's IDs are the same as the resourceIds they correspond to)
+  questionResources.forEach(({questionID, resource}) =>
+  {
+        let resourceURL = resource.url;
+        document.getElementById(resource.id).innerHTML = "To learn more about where this information was found, click on the following link: " + resourceURL;
+  });
 }
 
 /*
@@ -46,25 +75,11 @@ function getResources(subjectName)
 }
 
 /*
-    signature: displayResources: string string string -> void
+    signature: displayResources: string string -> void
 
-    purpose: expects a string that is representative of the id of the current
-             answer that the user has given a response to and expects a string
-             corresponding to the id of the p element below the question and
-             a string for the subject name, and returns nothing,
+    purpose: expects a string corresponding to the id of the p element below the 
+             question and a string for the subject name, and returns nothing,
              with the side-effect of changing the p element below the question
              that the user just answered to display the resource that corresponds
              with that answer.
 */
-
-// Have the pIdStrings be the same as the resourceIds
-function displayResources(answerIdString, pIdString, subjectName)
-{
-    let answerId = document.getElementById(answerIdString);
-
-    let allResources = getResources(subjectName);
-    // Need to find a way to pull just 1 resource, and have it correspond to the correct question
-    let resourceURL = allResources.filter((resource) => resource.id == pIdString)[0].url
-
-    document.getElementById(pIdString).innerHTML = "To learn more about where this information was found, click on the following link: " + resourceURL;
-}
