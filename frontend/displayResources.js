@@ -1,9 +1,6 @@
 "use strict";
 
 // Get the subject Name
-
-let subjectName = "";
-
 document.addEventListener("DOMContentLoaded", async () => {
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -36,7 +33,7 @@ async function formSubmission(event)
   let allResources = getResources(subjectName);
 
   // Use the answer key objects to get the questionIds
-  let questionResources = allQuestions.map((question) => ({questionID: question.id, resource: allResources.filter((resource) => resource.id == question.resourceId})[0]);
+  let questionResources = allQuestions.map((question) => ({questionID: question.id, resource: allResources.filter((resource) => resource.id == question.resourceId)})[0]);
 
   // Use a forEach loop to display the resources (Note: the p element's IDs are the same as the resourceIds they correspond to)
   questionResources.forEach(({questionID, resource}) =>
