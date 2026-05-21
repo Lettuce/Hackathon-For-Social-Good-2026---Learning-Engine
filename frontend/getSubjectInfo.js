@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupUI(subjectTitle);
   
   const questions = await getQuestions(subjectName);
-  renderQuestions(questions);
   renderChoices(questions);
 
   const form = document.getElementById("form");
@@ -60,43 +59,6 @@ function getQuestions(subjectName) {
     });
 }
 
-function renderQuestions(questions) {
-  if (!questions) return;
-  const easyElement = document.getElementById("easy");
-  const mediumElement = document.getElementById("medium");
-  const hardElement = document.getElementById("hard");
-
-  if (!easyElement) {
-    console.error("Target element #eazy not found in DOM");
-    return;
-  }
-
-  if (!mediumElement) {
-    console.error("Target element #medium not found in DOM");
-    return;
-  }
-
-  if (!hardElement) {
-    console.error("Target element #hard not found in DOM");
-    return;
-  }
-
-  questions.forEach((questionObj) => {
-    const pTag = document.createElement("p");
-    // Access the string property inside the object
-    pTag.textContent = questionObj.question;
-
-    // Route to the correct container based on the difficulty property
-    if (questionObj.difficulty === "easy") {
-      easyElement.appendChild(pTag);
-    } else if (questionObj.difficulty === "medium") {
-      mediumElement.appendChild(pTag);
-    } else if (questionObj.difficulty === "hard") {
-      hardElement.appendChild(pTag);
-    }
-  });
-}
-
 function renderChoices(choices) {
   if (!choices) return;
 
@@ -116,7 +78,7 @@ function renderChoices(choices) {
   }
 
   choices.forEach((questionObj, qIndex) => {
-    const { choices: choicesArray, difficulty, question } = questionObj;
+    const { choices: choicesArray, difficulty, question, resourceId } = questionObj;
     const parentContainer = containers[difficulty];
 
     if (!parentContainer) return;
@@ -127,6 +89,10 @@ function renderChoices(choices) {
     const questionTitle = document.createElement("p");
     questionTitle.textContent = question;
     questionGroup.appendChild(questionTitle);
+
+    const answerResult = document.createElement("p");
+    answerResult.id = resourceId;
+    questionGroup.appendChild(answerResult);
     
     const questionId = questionObj.id;
 
