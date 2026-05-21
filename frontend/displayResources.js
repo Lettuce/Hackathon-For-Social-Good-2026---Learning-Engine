@@ -40,7 +40,13 @@ async function formSubmission(event)
   questionResources.forEach((resource) =>
   {
         let resourceURL = resource.url;
-        document.getElementById(resource.id).innerHTML = "To learn more about where this information was found, click on the following link: " + resourceURL;
+        const pElement = document.getElementById(resource.id);
+        // pElement.innerHTML = "To learn more about where this information was found, click on the following link: " + resourceURL;
+        // 
+        const aElement = document.createElement("a");
+        aElement.href = resourceURL;
+        aElement.innerHTML = "here";
+        document.appendChild(aElement);
   });
 }
 
