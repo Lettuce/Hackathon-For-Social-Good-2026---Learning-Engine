@@ -153,22 +153,6 @@ function renderChoices(choices) {
   });
 }
 
-async function formSubmission(event) {
-  const answers = getAnswers(event.target);
-
-  // const mapObject = (object, func) => Object.fromEntries(Object.entries(object).map(([k, v]) => [k, func(k, v)]));
-  // const processedAnswers = mapObject(answers, (k, v) => v);
-  const correctQuestions = await API.submitAnswers(subjectName, answers);
-
-  const result = document.createElement("div");
-  const resultText = document.createElement("p");
-  
-  resultText.textContent = `You got ${correctQuestions.length} correct out of 6`;
-  result.appendChild(resultText);
-  const body = document.getElementById("body");
-  body.appendChild(result);
-}
-
 function getAnswers(formElement) {
   const formData = new FormData(formElement);
   return Object.fromEntries(formData.entries());
