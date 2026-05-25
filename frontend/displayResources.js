@@ -40,9 +40,52 @@ async function formSubmission(event)
     resultText = document.getElementById("submission-result-text");
   }
 
-  // Update the text (works for both newly created and pre-existing elements)
   resultText.textContent = `You got ${correctQuestions.length} correct out of 6`;
+
+  // --- Background Color Highlighting Logic ---
+  // Get all question group wrappers inside our fieldsets
+  const questionGroups = document.querySelectorAll(".question-group");
   
+  questionGroups.forEach((group) => {
+    // Find all inputs (radios) belonging to this specific question
+    const inputs = group.querySelectorAll('input[type="radio"]');
+    if (inputs.length === 0) return;
+
+    // Use the name attribute of the first input to identify the question ID
+    const questionId = inputs[0].name;
+    const isCorrect = correctQuestions.includes(questionId);
+    const userAnswerValue = answers[questionId];
+
+    inputs.forEach((input) => {
+      // Find the corresponding label element
+      const label = group.querySelector(`label[for="${input.id}"]`);
+      if (!label) return;
+
+    // Store original text so we don't infinitely append symbols on re-runs
+    if (!label.hasAttribute("data-original-text")) {
+      label.setAttribute("data-original-text", label.textContent);
+    }
+
+    // Reset background and restore original text
+    label.style.backgroundColor = "transparent";
+    label.textContent = label.getAttribute("data-original-text");
+
+      // Check if this specific radio button is the one the user selected
+      if (input.value === userAnswerValue) {
+        if (isCorrect) {
+          // User chose this option, and the question is in the correct list
+          label.style.backgroundColor = "#00ff3c";
+          label.textContent += " ✓";
+        } else {
+          // User chose this option, but it was incorrect
+          label.style.backgroundColor = "#fd0015";
+          label.textContent += " ✗";
+        }
+      }
+    });
+  });
+  // ^^^ Background Color Highlighting Logic ^^^
+
   // Get all questions and resources
   let allQuestions = await getQuestions(subjectName);
   let allResources = await getResources(subjectName);
