@@ -20,13 +20,28 @@ async function formSubmission(event)
   // const processedAnswers = mapObject(answers, (k, v) => v);
   const correctQuestions = await API.submitAnswers(subjectName, answers);
 
-  const result = document.createElement("div");
-  const resultText = document.createElement("p");
-  
+  // Check if the result element already exists
+  let result = document.getElementById("submission-result");
+  let resultText;
+
+  if (!result) {
+    // If it doesn't exist, create the container and the paragraph
+    result = document.createElement("div");
+    result.id = "submission-result";
+
+    resultText = document.createElement("p");
+    resultText.id = "submission-result-text";
+    result.appendChild(resultText);
+
+    const body = document.getElementById("body");
+    body.appendChild(result);
+  } else {
+    // If it already exists, select the existing paragraph element
+    resultText = document.getElementById("submission-result-text");
+  }
+
+  // Update the text (works for both newly created and pre-existing elements)
   resultText.textContent = `You got ${correctQuestions.length} correct out of 6`;
-  result.appendChild(resultText);
-  const body = document.getElementById("body");
-  body.appendChild(result);
   
   // Get all questions and resources
   let allQuestions = await getQuestions(subjectName);
@@ -46,7 +61,7 @@ async function formSubmission(event)
         const aElement = document.createElement("a");
         aElement.href = resourceURL;
         aElement.innerHTML = "here";
-        document.appendChild(aElement);
+        pElement.appendChild(aElement);
   });
 }
 
