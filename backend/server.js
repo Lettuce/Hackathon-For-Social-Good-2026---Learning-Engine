@@ -62,16 +62,25 @@ class API extends ServerAPI {
 
     completedsubjects_middleware = [API.#database.getUser];
     completedsubjects = async req => {
+        const compareAnswersToFile = async ([subject, userAnswers]) => {
+            const fileAnswers = await API.#database.loadSubjectAnswers(subject);
+            if (!fileAnswers || Object.keys(fileAnswers).length === 0) {
+                return [subject, false];
+            }
 
-        const compareAnswersToFile = ([subject, userAnswers]) => {
-            const fileAnswers = API.#database.loadSubjectAnswers(subject)??{};
-            const isCompleted = Object.keys(fileAnswers).every((fileAnswer) => userAnswers.includes(fileAnswer));
+            const isCompleted = Object.keys(fileAnswers).every((fileAnswer) => 
+                (userAnswers ?? []).includes(fileAnswer)
+            );
             return [subject, isCompleted];
         };
+
+        const completion = await Promise.all(
+            Object.entries(req.user.progress).map(compareAnswersToFile)
+        );
     
-        const completion = await Promise.all(Object.entries(req.user.progress).map(compareAnswersToFile));
-    
-        const completedSubjects = completion.filter(([subject, completed]) => completed).map(([subject, completed])=>subject);
+        const completedSubjects = completion
+            .filter(([subject, completed]) => completed)
+            .map(([subject, completed]) => subject);
     
         return {status: 200, json: completedSubjects};
     };
