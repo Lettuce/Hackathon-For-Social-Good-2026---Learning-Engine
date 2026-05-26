@@ -68,17 +68,20 @@ async function formSubmission(event)
 
     // Reset background and restore original text
     label.style.backgroundColor = "transparent";
+    label.style.border = "none"
     label.textContent = label.getAttribute("data-original-text");
 
       // Check if this specific radio button is the one the user selected
       if (input.value === userAnswerValue) {
         if (isCorrect) {
           // User chose this option, and the question is in the correct list
-          label.style.backgroundColor = "#00ff3c";
+          label.style.backgroundColor = "#003813";
+          label.style.border = "0.1em solid #FFC72C";
           label.textContent += " ✓";
         } else {
           // User chose this option, but it was incorrect
-          label.style.backgroundColor = "#fd0015";
+          label.style.backgroundColor = "#750008";
+          label.style.border = "0.1em solid #FFC72C";
           label.textContent += " ✗";
         }
       }
