@@ -57,7 +57,7 @@ if (auth) {
 
       // Use the fetched completedSubjects array here
       const isCompleted = completedSubjects.includes(subject);
-      pProgress.textContent = isCompleted ? "✅" : "";
+      pProgress.textContent = isCompleted ? "✓" : "";
 
       // Configure the link with a query parameter
       let subjectTitle = subject
