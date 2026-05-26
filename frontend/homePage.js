@@ -23,7 +23,7 @@ if (!API.loggedIn()) {
 }
 
 // Execute the function and handle the resulting promise
-getSubjects().then((subjectsData) => {
+getSubjects().then(async (subjectsData) => {
   if (!subjectsData) return;
   
   console.log("Fetched Subjects Data:", subjectsData);
@@ -34,10 +34,21 @@ getSubjects().then((subjectsData) => {
     return;
   }
 
+  // Fetch the data ONCE before starting the loop
+  const completedSubjects = await API.getCompletedSubjects() || [];
+
+  // This loop runs synchronously now and won't throw errors
   subjectsData.forEach((subject) => {
-    const pElement = document.createElement("p");
+    const pSubjectName = document.createElement("p");
     const aElement = document.createElement("a");
+    const pProgress = document.createElement("p");
     const fieldsetElement = document.createElement("fieldset");
+
+    pProgress.id = "progress";
+
+    // Use the fetched completedSubjects array here
+    const isCompleted = completedSubjects.includes(subject);
+    pProgress.textContent = isCompleted ? "Review Material 🔄" : "Begin Subject ⚔️";
 
     // Configure the link with a query parameter
     let subjectTitle = subject
@@ -49,8 +60,9 @@ getSubjects().then((subjectsData) => {
     aElement.href = `subject.html?name=${subject}`;
 
     // Nest and append
-    pElement.appendChild(aElement);
-    fieldsetElement.appendChild(pElement);
+    pSubjectName.appendChild(aElement);
+    fieldsetElement.appendChild(pSubjectName);
+    fieldsetElement.appendChild(pProgress);
     subjectsElement.appendChild(fieldsetElement);
   });
 });
