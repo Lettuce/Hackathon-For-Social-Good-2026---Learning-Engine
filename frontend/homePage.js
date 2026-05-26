@@ -22,47 +22,57 @@ if (!API.loggedIn()) {
   window.location.href = "login.html";
 }
 
-// Execute the function and handle the resulting promise
-getSubjects().then(async (subjectsData) => {
-  if (!subjectsData) return;
-  
-  console.log("Fetched Subjects Data:", subjectsData);
-  const subjectsElement = document.getElementById("subjects");
+document.addEventListener("DOMContentLoaded", () => {
+const auth = API.currentAuth();
+if (auth) {
+  const username = auth.username;
+  document.getElementById("welcome-message").textContent = `Welcome back, ${username}!`;
+} else {
+  console.log("No user is currently logged in.");
+}
 
-  if (!subjectsElement) {
-    console.error("Target element #subjects not found in DOM");
-    return;
-  }
+  // Execute the function and handle the resulting promise
+  getSubjects().then(async (subjectsData) => {
+    if (!subjectsData) return;
+    
+    console.log("Fetched Subjects Data:", subjectsData);
+    const subjectsElement = document.getElementById("subjects");
 
-  // Fetch the data ONCE before starting the loop
-  const completedSubjects = await API.getCompletedSubjects() || [];
+    if (!subjectsElement) {
+      console.error("Target element #subjects not found in DOM");
+      return;
+    }
 
-  // This loop runs synchronously now and won't throw errors
-  subjectsData.forEach((subject) => {
-    const pSubjectName = document.createElement("p");
-    const aElement = document.createElement("a");
-    const pProgress = document.createElement("p");
-    const fieldsetElement = document.createElement("fieldset");
+    // Fetch the data ONCE before starting the loop
+    const completedSubjects = await API.getCompletedSubjects() || [];
 
-    pProgress.id = "progress";
+    // This loop runs synchronously now and won't throw errors
+    subjectsData.forEach((subject) => {
+      const pSubjectName = document.createElement("p");
+      const aElement = document.createElement("a");
+      const pProgress = document.createElement("p");
+      const fieldsetElement = document.createElement("fieldset");
 
-    // Use the fetched completedSubjects array here
-    const isCompleted = completedSubjects.includes(subject);
-    pProgress.textContent = isCompleted ? "Review Material 🔄" : "Begin Subject ⚔️";
+      pProgress.id = "progress";
 
-    // Configure the link with a query parameter
-    let subjectTitle = subject
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+      // Use the fetched completedSubjects array here
+      const isCompleted = completedSubjects.includes(subject);
+      pProgress.textContent = isCompleted ? "Review Material 🔄" : "Begin Subject ⚔️";
 
-    aElement.textContent = subjectTitle;
-    aElement.href = `subject.html?name=${subject}`;
+      // Configure the link with a query parameter
+      let subjectTitle = subject
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
 
-    // Nest and append
-    pSubjectName.appendChild(aElement);
-    fieldsetElement.appendChild(pSubjectName);
-    fieldsetElement.appendChild(pProgress);
-    subjectsElement.appendChild(fieldsetElement);
+      aElement.textContent = subjectTitle;
+      aElement.href = `subject.html?name=${subject}`;
+
+      // Nest and append
+      pSubjectName.appendChild(aElement);
+      fieldsetElement.appendChild(pSubjectName);
+      fieldsetElement.appendChild(pProgress);
+      subjectsElement.appendChild(fieldsetElement);
+    });
   });
 });
